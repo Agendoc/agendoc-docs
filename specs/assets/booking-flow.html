@@ -1,0 +1,133 @@
+<style>
+  .phones { display:flex; gap:20px; flex-wrap:wrap; justify-content:center; align-items:flex-start; }
+  .arrow { align-self:center; font-size:28px; color:#7d8aa0; }
+  .phone { width:280px; height:600px; border:2px solid #dfe5ee; border-radius:28px; background:#f5f8fc; overflow:hidden; font-family: system-ui, sans-serif; color:#06214e; font-size:12px; display:flex; flex-direction:column; }
+  .tb { background:#fff; padding:10px 14px; border-bottom:1px solid #dfe5ee; font-weight:700; font-size:14px; }
+  .demo { background:#fff3dc; color:#965200; font-size:10px; text-align:center; padding:3px; }
+  .body { padding:10px 14px; display:flex; flex-direction:column; gap:8px; flex:1; overflow:hidden; }
+  .card { background:#fff; border:1px solid #dfe5ee; border-radius:14px; padding:10px; }
+  .muted { color:#5d6b82; font-size:11px; }
+  .star { color:#e8a317; }
+  .row { display:flex; justify-content:space-between; align-items:center; }
+  .days { display:flex; gap:5px; }
+  .day { flex:1; text-align:center; border:1px solid #dfe5ee; border-radius:10px; padding:4px 0; background:#fff; font-size:10px; }
+  .day b { display:block; font-size:13px; }
+  .day.on { background:#13376b; color:#fff; border-color:#13376b; }
+  .day.off { opacity:.4; }
+  .times { display:grid; grid-template-columns:repeat(4,1fr); gap:5px; }
+  .t { text-align:center; background:#e7effc; color:#1757b3; border-radius:8px; padding:5px 0; font-weight:600; font-size:11px; }
+  .t.on { background:#1f69d2; color:#fff; }
+  .t.off { background:#ebf0f6; color:#7d8aa0; text-decoration:line-through; font-weight:400; }
+  .btn { background:#1f69d2; color:#fff; text-align:center; border-radius:999px; padding:9px; font-weight:700; margin-top:auto; }
+  .btn2 { border:1px solid #dfe5ee; background:#fff; text-align:center; border-radius:999px; padding:7px; font-weight:600; font-size:11px; }
+  .acts { display:flex; gap:6px; }
+  .acts span { flex:1; text-align:center; border:1px solid #dfe5ee; background:#fff; border-radius:10px; padding:6px 2px; font-size:10px; }
+  .check { display:flex; gap:6px; align-items:flex-start; font-size:11px; }
+  .box { width:14px; height:14px; border:1.5px solid #1f69d2; border-radius:4px; flex-shrink:0; background:#1f69d2; color:#fff; font-size:10px; line-height:13px; text-align:center; }
+  .box.empty { background:#fff; }
+  .ok { text-align:center; padding:6px 0; }
+  .ok .big { font-size:30px; color:#0b7566; }
+  .tip { background:#e2f6f1; border-radius:12px; padding:8px 10px; font-size:11px; }
+  .tip li { margin-left:14px; }
+  .toggle { display:flex; justify-content:space-between; font-size:11px; padding:3px 0; }
+  .sw { width:26px; height:14px; border-radius:999px; background:#2ec8b0; position:relative; }
+  .sw.off { background:#dfe5ee; }
+  .soon { font-size:9px; background:#ebf0f6; border-radius:6px; padding:1px 4px; color:#5d6b82; }
+  .note { max-width:280px; font-size:12px; color:#4a5a73; margin-top:6px; }
+</style>
+
+<h2>Fluxo de agendamento (depois de escolher a clínica no mapa)</h2>
+<p class="subtitle">Opção B escolhida para a busca ✔. Agora: as 3 telas seguintes. Não precisa clicar em nada, comente no terminal o que está errado ou faltando.</p>
+
+<div class="phones">
+
+  <div>
+    <p class="label">1 · Clínica + dia e horário</p>
+    <div class="phone">
+      <div class="demo">Dados de demonstração</div>
+      <div class="tb">‹ Clínica Movimento</div>
+      <div class="body">
+        <div class="card">
+          <div class="row"><b>Ortopedia</b><span class="star">★ 4,8 <span class="muted">(212)</span></span></div>
+          <div class="muted">Rua das Flores, 120 · 1,2 km</div>
+          <div class="muted">Unimed, Bradesco · particular R$ 180</div>
+          <div class="acts" style="margin-top:6px"><span>📞 Ligar</span><span>💬 WhatsApp</span><span>📍 Rota</span></div>
+        </div>
+        <div class="row"><b>Novembro</b><span class="muted">ver mês ›</span></div>
+        <div class="days">
+          <div class="day on">seg<b>3</b></div><div class="day">ter<b>4</b></div><div class="day">qua<b>5</b></div><div class="day off">qui<b>6</b></div><div class="day">sex<b>7</b></div>
+        </div>
+        <div class="muted">Manhã</div>
+        <div class="times"><span class="t off">08:00</span><span class="t">08:30</span><span class="t off">09:00</span><span class="t">09:30</span></div>
+        <div class="muted">Tarde</div>
+        <div class="times"><span class="t on">14:30</span><span class="t">15:00</span><span class="t off">15:30</span><span class="t">16:00</span></div>
+        <div class="muted">Avaliações ›  ·  Sobre a clínica ›</div>
+        <div class="btn">Continuar · seg 3/11, 14:30</div>
+      </div>
+    </div>
+    <p class="note">Faixa de dias + grade de horários. Horário ocupado aparece riscado. Contato e rota já aqui.</p>
+  </div>
+
+  <div class="arrow">→</div>
+
+  <div>
+    <p class="label">2 · Revisar e confirmar</p>
+    <div class="phone">
+      <div class="demo">Dados de demonstração</div>
+      <div class="tb">‹ Confirmar consulta</div>
+      <div class="body">
+        <div class="card">
+          <b>Clínica Movimento · Ortopedia</b>
+          <div class="muted">Segunda, 3 de novembro, 14:30</div>
+          <div class="muted">Rua das Flores, 120</div>
+        </div>
+        <div class="card">
+          <b>Pagamento</b>
+          <div class="row" style="margin-top:4px"><span>● Convênio Unimed</span></div>
+          <div class="muted">nº da carteirinha (opcional)</div>
+          <div class="row"><span>○ Particular · R$ 180</span></div>
+        </div>
+        <div class="card">
+          <div class="check"><span class="box">✓</span><span>Compartilhar o <b>resumo da pré-triagem</b> com a clínica <span class="muted">(sintomas relatados e especialidade, sem o chat completo)</span></span></div>
+        </div>
+        <div class="card">
+          <b>Lembretes</b>
+          <div class="toggle"><span>E-mail · 1 dia e 2 h antes</span><span class="sw"></span></div>
+          <div class="toggle"><span>WhatsApp <span class="soon">em breve</span></span><span class="sw off"></span></div>
+        </div>
+        <div class="muted">Esta clínica confirma automaticamente.</div>
+        <div class="btn">Confirmar agendamento</div>
+      </div>
+    </div>
+    <p class="note">Se a clínica for de aprovação manual, o botão vira "Solicitar horário" e a tela final mostra "aguardando a clínica".</p>
+  </div>
+
+  <div class="arrow">→</div>
+
+  <div>
+    <p class="label">3 · Confirmado + orientações</p>
+    <div class="phone">
+      <div class="demo">Dados de demonstração</div>
+      <div class="tb">Consulta marcada</div>
+      <div class="body">
+        <div class="ok"><div class="big">✓</div><b>Tudo certo!</b><div class="muted">Seg, 3/11 às 14:30 · Clínica Movimento</div></div>
+        <div class="acts"><span>📅 Adicionar ao calendário</span><span>📍 Como chegar</span></div>
+        <div class="tip">
+          <b>Antes da consulta</b>
+          <ul>
+            <li>Leve documento com foto e a carteirinha Unimed</li>
+            <li>Chegue 15 min antes</li>
+            <li>Anote quando a dor no joelho começou e o que piora</li>
+            <li>Leve exames de imagem antigos, se tiver</li>
+          </ul>
+          <div class="muted" style="margin-top:4px">Orientações gerais, não substituem a avaliação médica.</div>
+        </div>
+        <div class="tip" style="background:#fdeceb;color:#c0362c">Se piorar (febre, inchaço forte, não conseguir apoiar o pé), procure um pronto atendimento ou ligue 192.</div>
+        <div class="btn2">Enviar resumo da triagem por e-mail</div>
+        <div class="btn">Ver minhas consultas</div>
+      </div>
+    </div>
+    <p class="note">Orientações = parte fixa da clínica + parte gerada a partir da pré-triagem. Sinais de alerta sempre visíveis.</p>
+  </div>
+
+</div>

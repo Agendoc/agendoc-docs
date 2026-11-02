@@ -1,0 +1,89 @@
+<style>
+  .desk { border:2px solid #dfe5ee; border-radius:14px; background:#f5f8fc; overflow:hidden; font-family: system-ui, sans-serif; color:#06214e; font-size:12px; display:flex; height:520px; }
+  .side { width:170px; background:#13376b; color:#fff; padding:14px 10px; display:flex; flex-direction:column; gap:4px; }
+  .side .logo { font-weight:800; font-size:15px; margin-bottom:10px; }
+  .side span { padding:7px 8px; border-radius:8px; font-size:12px; }
+  .side .on { background:#24497f; font-weight:700; }
+  .side .cnt { float:right; background:#2ec8b0; color:#06214e; border-radius:999px; padding:0 6px; font-size:10px; font-weight:700; }
+  .main { flex:1; padding:14px; display:flex; gap:12px; overflow:hidden; }
+  .col { display:flex; flex-direction:column; gap:10px; }
+  .card { background:#fff; border:1px solid #dfe5ee; border-radius:14px; padding:10px; }
+  .muted { color:#5d6b82; font-size:11px; }
+  .row { display:flex; justify-content:space-between; align-items:center; gap:6px; }
+  .week { display:grid; grid-template-columns:44px repeat(5,1fr); gap:3px; font-size:10px; }
+  .week .h { text-align:center; font-weight:700; padding:3px 0; }
+  .week .t { color:#5d6b82; text-align:right; padding-right:4px; }
+  .slot { border-radius:6px; padding:3px; min-height:22px; }
+  .free { background:#ebf0f6; }
+  .ok { background:#e2f6f1; color:#0b7566; font-weight:600; }
+  .wait { background:#fff3dc; color:#965200; font-weight:600; border:1px dashed #965200; }
+  .blk { background: repeating-linear-gradient(45deg,#dfe5ee 0 4px,#f5f8fc 4px 8px); }
+  .btn { background:#1f69d2; color:#fff; border-radius:999px; padding:5px 12px; font-weight:700; font-size:11px; }
+  .btn2 { border:1px solid #dfe5ee; background:#fff; border-radius:999px; padding:5px 12px; font-weight:600; font-size:11px; }
+  .tri { background:#e7effc; border-radius:10px; padding:8px; font-size:11px; }
+  .sw { width:26px; height:14px; border-radius:999px; background:#2ec8b0; display:inline-block; vertical-align:middle; }
+  .legend span { margin-right:8px; }
+  .demo { background:#fff3dc; color:#965200; font-size:10px; text-align:center; padding:3px; }
+</style>
+
+<h2>Painel da clínica</h2>
+<p class="subtitle">Pensado para computador (recepção da clínica), mas funcionando no celular. Comente no terminal o que está errado ou faltando.</p>
+
+<div class="demo">Dados de demonstração</div>
+<div class="desk">
+  <div class="side">
+    <div class="logo">AgenDoc · Clínica</div>
+    <span class="on">📅 Agenda</span>
+    <span>⏳ Solicitações <b class="cnt">2</b></span>
+    <span>🕒 Horários de atendimento</span>
+    <span>🚫 Bloqueios (feriados, férias)</span>
+    <span>🏥 Dados da clínica</span>
+    <span>⭐ Avaliações</span>
+    <span style="margin-top:auto">Sair</span>
+  </div>
+
+  <div class="main">
+    <div class="col" style="flex:1.4">
+      <div class="row"><b style="font-size:14px">Semana de 3 a 7 de novembro</b><span><span class="btn2">‹</span> <span class="btn2">Hoje</span> <span class="btn2">›</span></span></div>
+      <div class="card">
+        <div class="week">
+          <div></div><div class="h">seg 3</div><div class="h">ter 4</div><div class="h">qua 5</div><div class="h">qui 6</div><div class="h">sex 7</div>
+          <div class="t">08:00</div><div class="slot ok">Ana P.</div><div class="slot free"></div><div class="slot free"></div><div class="slot blk"></div><div class="slot ok">João S.</div>
+          <div class="t">08:30</div><div class="slot free"></div><div class="slot ok">Maria L.</div><div class="slot free"></div><div class="slot blk"></div><div class="slot free"></div>
+          <div class="t">09:00</div><div class="slot ok">Carlos M.</div><div class="slot free"></div><div class="slot wait">Pedro A.?</div><div class="slot blk"></div><div class="slot free"></div>
+          <div class="t">09:30</div><div class="slot free"></div><div class="slot free"></div><div class="slot free"></div><div class="slot blk"></div><div class="slot ok">Lia R.</div>
+          <div class="t">…</div><div></div><div></div><div></div><div></div><div></div>
+          <div class="t">14:30</div><div class="slot ok" style="outline:2px solid #1f69d2">Guilherme N.</div><div class="slot free"></div><div class="slot free"></div><div class="slot blk"></div><div class="slot free"></div>
+          <div class="t">15:00</div><div class="slot free"></div><div class="slot wait">Bruna C.?</div><div class="slot free"></div><div class="slot blk"></div><div class="slot free"></div>
+        </div>
+        <div class="legend muted" style="margin-top:8px"><span>▇ confirmada</span><span style="color:#965200">▇ aguardando você</span><span>▇ livre</span><span>▨ bloqueado (feriado)</span></div>
+      </div>
+      <div class="card row">
+        <span>Confirmação de novos agendamentos: <b>manual</b></span>
+        <span class="muted">automática <span class="sw"></span></span>
+      </div>
+    </div>
+
+    <div class="col" style="flex:1">
+      <div class="card">
+        <div class="row"><b>Guilherme N.</b><span class="muted">seg 3/11 · 14:30</span></div>
+        <div class="muted">Ortopedia · Convênio Unimed · carteirinha 0012…</div>
+        <div class="muted">Telefone (11) 9····-1234</div>
+        <div class="tri" style="margin-top:8px">
+          <b>Resumo da pré-triagem</b> <span class="muted">(compartilhado pelo paciente)</span>
+          <div>Dor no joelho direito há 2 semanas, piora ao subir escadas. Sem febre. Urgência: baixa.</div>
+          <div class="muted" style="margin-top:3px">Gerado por IA a partir do relato do paciente. Não é diagnóstico.</div>
+        </div>
+        <div class="row" style="margin-top:8px; justify-content:flex-start">
+          <span class="btn2">Marcar como realizada</span><span class="btn2">Faltou</span><span class="btn2" style="color:#c0362c">Cancelar…</span>
+        </div>
+      </div>
+      <div class="card">
+        <b>Solicitações aguardando (2)</b>
+        <div class="row" style="margin-top:6px"><span>Pedro A. · qua 5/11 09:00</span><span><span class="btn">Aceitar</span> <span class="btn2">Recusar</span></span></div>
+        <div class="row" style="margin-top:6px"><span>Bruna C. · ter 4/11 15:00</span><span><span class="btn">Aceitar</span> <span class="btn2">Recusar</span></span></div>
+        <div class="muted" style="margin-top:6px">Sem resposta até 24 h antes → expira e o paciente é avisado.</div>
+      </div>
+    </div>
+  </div>
+</div>

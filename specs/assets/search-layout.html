@@ -1,0 +1,132 @@
+<style>
+  .phones { display:flex; gap:24px; flex-wrap:wrap; justify-content:center; }
+  .phone { width:300px; height:600px; border:2px solid #dfe5ee; border-radius:28px; background:#f5f8fc; overflow:hidden; position:relative; font-family: system-ui, sans-serif; color:#06214e; font-size:12px; display:flex; flex-direction:column; }
+  .tb { background:#fff; padding:12px 14px 8px; border-bottom:1px solid #dfe5ee; }
+  .tb b { font-size:14px; }
+  .ctx { display:inline-block; margin-top:6px; background:#e2f6f1; color:#0b7566; border-radius:999px; padding:2px 8px; font-size:11px; font-weight:600; }
+  .chips { display:flex; gap:6px; padding:8px 14px; overflow:hidden; white-space:nowrap; background:#fff; border-bottom:1px solid #dfe5ee; }
+  .chip { border:1px solid #dfe5ee; border-radius:999px; padding:3px 9px; font-size:11px; background:#fff; }
+  .chip.on { background:#1f69d2; color:#fff; border-color:#1f69d2; }
+  .seg { display:flex; margin:8px 14px 0; background:#ebf0f6; border-radius:10px; padding:3px; }
+  .seg span { flex:1; text-align:center; padding:4px; border-radius:8px; font-size:11px; }
+  .seg .on { background:#fff; font-weight:600; }
+  .list { padding:8px 14px; display:flex; flex-direction:column; gap:8px; overflow:hidden; flex:1; }
+  .card { background:#fff; border:1px solid #dfe5ee; border-radius:14px; padding:10px; }
+  .card .row { display:flex; justify-content:space-between; }
+  .muted { color:#5d6b82; font-size:11px; }
+  .star { color:#e8a317; }
+  .slots { display:flex; gap:4px; margin-top:6px; flex-wrap:wrap; }
+  .slot { background:#e7effc; color:#1757b3; border-radius:8px; padding:2px 6px; font-size:11px; font-weight:600; }
+  .map { background: repeating-linear-gradient(45deg,#e6edf5 0 10px,#eef3f8 10px 20px); position:relative; }
+  .pin { position:absolute; background:#13376b; color:#fff; font-size:10px; padding:2px 6px; border-radius:999px; font-weight:600; }
+  .pin.me { background:#2ec8b0; color:#06214e; }
+  .sheet { position:absolute; left:0; right:0; bottom:0; background:#f5f8fc; border-radius:20px 20px 0 0; box-shadow:0 -4px 16px rgba(6,33,78,.12); }
+  .grab { width:36px; height:4px; background:#7d8aa0; border-radius:4px; margin:8px auto 2px; }
+  .demo { background:#fff3dc; color:#965200; font-size:10px; text-align:center; padding:3px; }
+</style>
+
+<h2>Tela de busca de clínicas: qual estrutura faz mais sentido?</h2>
+<p class="subtitle">Rascunhos de celular. Os dados são de exemplo. Clique na opção que você prefere (pode comentar no terminal o que misturaria entre elas).</p>
+
+<div class="options">
+  <div class="option" data-choice="a" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Lista primeiro, mapa num botão</h3>
+      <p>Foco em comparar horários e notas. O mapa é uma aba alternativa.</p>
+    </div>
+  </div>
+  <div class="option" data-choice="b" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>Mapa primeiro, lista deslizante por cima</h3>
+      <p>Estilo app de mobilidade/delivery. Foco em "o que tem perto de mim".</p>
+    </div>
+  </div>
+  <div class="option" data-choice="c" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>Lista com mini-mapa no topo</h3>
+      <p>Meio-termo: a lista manda, o mapa dá noção de distância sem tomar a tela.</p>
+    </div>
+  </div>
+</div>
+
+<div class="phones" style="margin-top:24px">
+
+  <!-- A -->
+  <div>
+    <p class="label">A · Lista primeiro</p>
+    <div class="phone">
+      <div class="demo">Dados de demonstração</div>
+      <div class="tb"><b>‹ Clínicas</b><br><span class="ctx">Indicado na pré-triagem: Ortopedia</span></div>
+      <div class="chips"><span class="chip on">Unimed ✕</span><span class="chip">Hoje</span><span class="chip">Até 5 km</span><span class="chip">Nota 4+</span><span class="chip">⚙ Filtros</span></div>
+      <div class="seg"><span class="on">Lista</span><span>Mapa</span></div>
+      <div class="muted" style="padding:6px 14px 0">12 clínicas · ordenar: <b>mais cedo</b> ▾</div>
+      <div class="list">
+        <div class="card"><div class="row"><b>Clínica Movimento</b><span class="star">★ 4,8 <span class="muted">(212)</span></span></div>
+          <div class="muted">1,2 km · Centro · Unimed, Bradesco, particular R$ 180</div>
+          <div class="slots"><span class="slot">Hoje 14:30</span><span class="slot">15:00</span><span class="slot">Amanhã 09:00</span><span class="slot">+</span></div></div>
+        <div class="card"><div class="row"><b>OrtoVida</b><span class="star">★ 4,5 <span class="muted">(88)</span></span></div>
+          <div class="muted">2,8 km · Jardins · Unimed, SulAmérica</div>
+          <div class="slots"><span class="slot">Hoje 17:00</span><span class="slot">Amanhã 08:30</span><span class="slot">+</span></div></div>
+        <div class="card"><div class="row"><b>Instituto Coluna & Joelho</b><span class="star">★ 4,9 <span class="muted">(41)</span></span></div>
+          <div class="muted">4,6 km · Vila Nova · Unimed, particular R$ 250</div>
+          <div class="slots"><span class="slot">Qui 10:00</span><span class="slot">Qui 11:30</span><span class="slot">+</span></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- B -->
+  <div>
+    <p class="label">B · Mapa primeiro</p>
+    <div class="phone">
+      <div class="demo">Dados de demonstração</div>
+      <div class="tb"><b>‹ Clínicas</b> <span class="ctx">Ortopedia</span></div>
+      <div class="chips"><span class="chip on">Unimed ✕</span><span class="chip">Hoje</span><span class="chip">Nota 4+</span><span class="chip">⚙</span></div>
+      <div class="map" style="flex:1">
+        <span class="pin me" style="top:120px;left:130px">● Você</span>
+        <span class="pin" style="top:70px;left:60px">★4,8 · 14:30</span>
+        <span class="pin" style="top:170px;left:190px">★4,5 · 17:00</span>
+        <span class="pin" style="top:40px;left:180px">★4,9 · Qui</span>
+        <div class="sheet" style="height:250px">
+          <div class="grab"></div>
+          <div class="muted" style="padding:2px 14px">12 clínicas nesta área</div>
+          <div class="list">
+            <div class="card"><div class="row"><b>Clínica Movimento</b><span class="star">★ 4,8</span></div>
+              <div class="muted">1,2 km · Unimed, Bradesco</div>
+              <div class="slots"><span class="slot">Hoje 14:30</span><span class="slot">15:00</span><span class="slot">+</span></div></div>
+            <div class="card"><div class="row"><b>OrtoVida</b><span class="star">★ 4,5</span></div>
+              <div class="muted">2,8 km · Unimed</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- C -->
+  <div>
+    <p class="label">C · Lista com mini-mapa</p>
+    <div class="phone">
+      <div class="demo">Dados de demonstração</div>
+      <div class="tb"><b>‹ Clínicas</b> <span class="ctx">Ortopedia</span></div>
+      <div class="chips"><span class="chip on">Unimed ✕</span><span class="chip">Hoje</span><span class="chip">Até 5 km</span><span class="chip">⚙ Filtros</span></div>
+      <div class="map" style="height:130px">
+        <span class="pin me" style="top:55px;left:130px">●</span>
+        <span class="pin" style="top:25px;left:60px">1</span>
+        <span class="pin" style="top:85px;left:200px">2</span>
+        <span class="pin" style="top:15px;left:220px">3</span>
+        <span class="chip" style="position:absolute;right:8px;bottom:8px">⤢ Ampliar</span>
+      </div>
+      <div class="list">
+        <div class="card"><div class="row"><b>1 · Clínica Movimento</b><span class="star">★ 4,8</span></div>
+          <div class="muted">1,2 km · Unimed, Bradesco, particular R$ 180</div>
+          <div class="slots"><span class="slot">Hoje 14:30</span><span class="slot">15:00</span><span class="slot">+</span></div></div>
+        <div class="card"><div class="row"><b>2 · OrtoVida</b><span class="star">★ 4,5</span></div>
+          <div class="muted">2,8 km · Unimed, SulAmérica</div>
+          <div class="slots"><span class="slot">Hoje 17:00</span><span class="slot">+</span></div></div>
+      </div>
+    </div>
+  </div>
+
+</div>

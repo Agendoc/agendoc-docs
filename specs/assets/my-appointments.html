@@ -1,0 +1,123 @@
+<style>
+  .phones { display:flex; gap:20px; flex-wrap:wrap; justify-content:center; align-items:flex-start; }
+  .phone { width:280px; height:600px; border:2px solid #dfe5ee; border-radius:28px; background:#f5f8fc; overflow:hidden; font-family: system-ui, sans-serif; color:#06214e; font-size:12px; display:flex; flex-direction:column; }
+  .tb { background:#fff; padding:10px 14px; border-bottom:1px solid #dfe5ee; font-weight:700; font-size:14px; }
+  .demo { background:#fff3dc; color:#965200; font-size:10px; text-align:center; padding:3px; }
+  .body { padding:10px 14px; display:flex; flex-direction:column; gap:8px; flex:1; overflow:hidden; }
+  .card { background:#fff; border:1px solid #dfe5ee; border-radius:14px; padding:10px; }
+  .muted { color:#5d6b82; font-size:11px; }
+  .row { display:flex; justify-content:space-between; align-items:center; }
+  .badge { font-size:10px; font-weight:700; border-radius:999px; padding:2px 7px; }
+  .b-ok { background:#e2f6f1; color:#0b7566; }
+  .b-wait { background:#fff3dc; color:#965200; }
+  .b-cancel { background:#fdeceb; color:#c0362c; }
+  .b-done { background:#ebf0f6; color:#4a5a73; }
+  .seg { display:flex; background:#ebf0f6; border-radius:10px; padding:3px; }
+  .seg span { flex:1; text-align:center; padding:4px; border-radius:8px; font-size:11px; }
+  .seg .on { background:#fff; font-weight:600; }
+  .nav { display:flex; border-top:1px solid #dfe5ee; background:#fff; }
+  .nav span { flex:1; text-align:center; padding:8px 0; font-size:10px; color:#5d6b82; }
+  .nav .on { color:#1f69d2; font-weight:700; }
+  .btn { background:#1f69d2; color:#fff; text-align:center; border-radius:999px; padding:9px; font-weight:700; }
+  .btn2 { border:1px solid #dfe5ee; background:#fff; text-align:center; border-radius:999px; padding:8px; font-weight:600; font-size:11px; }
+  .btnd { border:1px solid #c0362c; color:#c0362c; background:#fff; text-align:center; border-radius:999px; padding:8px; font-weight:600; font-size:11px; }
+  .acts { display:flex; gap:6px; }
+  .acts span { flex:1; text-align:center; border:1px solid #dfe5ee; background:#fff; border-radius:10px; padding:6px 2px; font-size:10px; }
+  .stars { color:#e8a317; font-size:16px; letter-spacing:2px; }
+  .emerg { background:#c0362c; color:#fff; border-radius:14px; padding:12px; }
+  .call { background:#fff; color:#c0362c; text-align:center; border-radius:999px; padding:9px; font-weight:800; font-size:14px; margin-top:8px; }
+  .note { max-width:280px; font-size:12px; color:#4a5a73; margin-top:6px; }
+</style>
+
+<h2>Minhas consultas, detalhe da consulta e caso de emergência</h2>
+<p class="subtitle">Comente no terminal o que está errado ou faltando. Não precisa clicar.</p>
+
+<div class="phones">
+
+  <div>
+    <p class="label">1 · Minhas consultas</p>
+    <div class="phone">
+      <div class="demo">Dados de demonstração</div>
+      <div class="tb">Minhas consultas</div>
+      <div class="body">
+        <div class="seg"><span class="on">Próximas</span><span>Anteriores</span></div>
+        <div class="card">
+          <div class="row"><b>Seg, 3/11 · 14:30</b><span class="badge b-ok">Confirmada</span></div>
+          <div class="muted">Ortopedia · Clínica Movimento</div>
+        </div>
+        <div class="card">
+          <div class="row"><b>Qua, 12/11 · 09:00</b><span class="badge b-wait">Aguardando clínica</span></div>
+          <div class="muted">Dermatologia · DermaCare</div>
+        </div>
+        <div class="card">
+          <div class="row"><b>Sex, 7/11 · 10:00</b><span class="badge b-cancel">Cancelada pela clínica</span></div>
+          <div class="muted">Clínico Geral · Saúde+ </div>
+          <div class="muted" style="color:#c0362c">Motivo: médico indisponível neste dia</div>
+          <div class="btn2" style="margin-top:6px">Escolher novo horário</div>
+        </div>
+        <p class="label" style="margin:6px 0 0">Anteriores</p>
+        <div class="card">
+          <div class="row"><b>12/10 · 16:00</b><span class="badge b-done">Realizada</span></div>
+          <div class="muted">Clínico Geral · Saúde+</div>
+          <div class="row" style="margin-top:4px"><span class="muted">Como foi?</span><span class="stars">☆☆☆☆☆</span></div>
+        </div>
+      </div>
+      <div class="nav"><span>💬<br>Conversas</span><span class="on">📅<br>Consultas</span><span>👤<br>Perfil</span></div>
+    </div>
+    <p class="note">Barra de navegação nova embaixo: Conversas · Consultas · Perfil (convênio, telefone, endereço).</p>
+  </div>
+
+  <div>
+    <p class="label">2 · Detalhe da consulta</p>
+    <div class="phone">
+      <div class="demo">Dados de demonstração</div>
+      <div class="tb">‹ Consulta</div>
+      <div class="body">
+        <div class="card">
+          <div class="row"><b>Ortopedia</b><span class="badge b-ok">Confirmada</span></div>
+          <div>Segunda, 3 de novembro · 14:30</div>
+          <div class="muted">Clínica Movimento · Rua das Flores, 120</div>
+          <div class="muted">Convênio Unimed</div>
+          <div class="acts" style="margin-top:6px"><span>📞 Ligar</span><span>💬 WhatsApp</span><span>📍 Rota</span></div>
+        </div>
+        <div class="acts"><span>📅 Calendário</span><span>📝 Ver orientações</span></div>
+        <div class="card">
+          <b>Pré-triagem que originou</b>
+          <div class="muted">Dor no joelho direito há 2 semanas · urgência baixa</div>
+          <div class="muted" style="color:#0b7566">✓ compartilhada com a clínica</div>
+          <div class="muted">Abrir conversa ›</div>
+        </div>
+        <div style="margin-top:auto; display:flex; flex-direction:column; gap:6px">
+          <div class="btn2">Remarcar</div>
+          <div class="btnd">Cancelar consulta</div>
+          <div class="muted" style="text-align:center">Cancelamento e remarcação até 2 h antes.</div>
+        </div>
+      </div>
+    </div>
+    <p class="note">Remarcar abre a grade de horários da mesma clínica. Cancelar pede confirmação (dentro da interface).</p>
+  </div>
+
+  <div>
+    <p class="label">3 · Pré-triagem com emergência</p>
+    <div class="phone">
+      <div class="tb">‹ Conversa</div>
+      <div class="body">
+        <div class="card muted">… sinto um aperto forte no peito que vai para o braço esquerdo …</div>
+        <div class="emerg">
+          <b style="font-size:14px">Atenção: procure atendimento agora</b>
+          <div style="font-size:11px;margin-top:4px">Os sintomas relatados podem indicar uma emergência. Não espere por uma consulta agendada.</div>
+          <div class="call">📞 Ligar 192 (SAMU)</div>
+        </div>
+        <div class="card">
+          <b>Pronto atendimentos próximos</b>
+          <div class="row" style="margin-top:4px"><span>UPA Centro</span><span class="muted">1,8 km · 24 h</span></div>
+          <div class="row"><span>Hospital Municipal</span><span class="muted">3,1 km · 24 h</span></div>
+          <div class="muted" style="margin-top:4px">📍 Rota até o mais próximo ›</div>
+        </div>
+        <div class="muted" style="text-align:center">Agendamento indisponível para este resultado.</div>
+      </div>
+    </div>
+    <p class="note">Com urgência de emergência, o botão "Agendar consulta" some. Entram 192 e UPAs/hospitais 24 h próximos (do mesmo cadastro de locais, marcados como pronto atendimento).</p>
+  </div>
+
+</div>
