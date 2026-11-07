@@ -18,7 +18,7 @@ Os marcos aprovados entram na branch `develop` de `agendoc-api` e `agendoc-web`.
 
 | Marco | Conteúdo | Status |
 |---|---|---|
-| M1 | Modelo e seed, busca com mapa e filtros, página da clínica e horários, marcar e confirmar, emergência | feito (07/11/2026) |
-| M2 | Minhas consultas, cancelar, Perfil com geocodificação, remarcar | feito (07/11/2026), aguardando teste |
+| M1 | Modelo e seed, busca com mapa e filtros, página da clínica e horários, marcar e confirmar, emergência | feito e aprovado (07/11/2026), na `develop` |
+| M2 | Minhas consultas, cancelar, Perfil com geocodificação, remarcar | feito e aprovado (07/11/2026), na `develop` |
 | M3 | Painel da clínica, endpoint admin, expiração dos pendentes | próximo |
 | M4 | Avaliações, documentação final, revisão e deploy | próximo |
