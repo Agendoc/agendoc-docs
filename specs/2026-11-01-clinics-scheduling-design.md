@@ -155,6 +155,7 @@ Sem data fixa: a ideia é avançar o máximo possível, com a versão completa d
 
 - **07/11/2026:** a lista de Minhas consultas e o cancelamento foram adiantados (antes do Perfil), porque sem eles não havia onde ver a consulta marcada.
 - **07/11/2026:** consulta confirmada ou pendente cujo horário já passou aparece como **"Encerrada"**, sem ações, até a clínica registrar "Realizada" ou "Faltou" no painel.
+- **07/11/2026 [autor]:** a mesma pessoa não pode ter duas consultas ativas (`PENDING` ou `CONFIRMED`) com horários sobrepostos, nem em clínicas diferentes. Vale para marcar e para remarcar; no remarcar, a própria consulta que está sendo trocada não conta. Mensagem: "Você já tem uma consulta nesse horário." Entra no Marco 3.
 - O registro completo das decisões de implementação, com o custo de cada uma se estiver errada, fica no ledger do plano (`.superpowers/`, fora do git); as que mudam o produto entram aqui.
 
 ## Deixado para o builder
