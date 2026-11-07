@@ -116,7 +116,8 @@ As referências visuais são os `.html` em `assets/`.
 
 ## Localização e mapa [builder]
 
-- Leaflet + OpenStreetMap (sem chave e sem custo). Respeitar a política de uso dos tiles e a atribuição visível. Se o volume ou a política virarem problema, trocar por um provedor de tiles gratuito com chave.
+- Leaflet com os tiles do Esri World Street Map (sem chave e sem custo, atribuição "Tiles © Esri" visível). *Atualizado em 07/11/2026:* os tiles padrão do OpenStreetMap ficaram feios no teste, e a CARTO passou a exigir chave. O mapa interativo do Google exige cobrança, então fica de fora. Se o volume ou a política virarem problema, trocar por um provedor gratuito com chave.
+- **Rota** ("Como chegar"): abre o app de mapas da pessoa por link, sem API e sem custo. O menu oferece Google Maps e Waze, e também Apple Mapas em iPhone e Mac. A origem é a localização atual da pessoa (o próprio app pega). No cartão de emergência, o link vai direto para o Google Maps, sem menu, para ser mais rápido.
 - A localização do paciente vem da geolocalização do navegador (com permissão). Se o paciente recusar, usa o endereço do Perfil. Sem nenhum dos dois, ou a mais de 50 km da área da demo, o mapa centraliza em São Paulo e as distâncias são medidas a partir do centro do mapa.
 - Endereço do Perfil para latitude e longitude: geocodificação no backend (ex.: Nominatim, respeitando o limite de 1 requisição por segundo e um User-Agent identificado), feita ao salvar o perfil. Se falhar, salva sem coordenadas e avisa.
 - A distância é calculada no backend (haversine). Com 12 clínicas não precisa de índice geoespacial.
@@ -124,7 +125,12 @@ As referências visuais são os `.html` em `assets/`.
 
 ## Calendário
 
-`GET` de um `.ics` por consulta (só o dono), com título, local, horário e status. Funciona em Google Agenda, Apple Calendar e Outlook ao abrir o arquivo.
+"Adicionar à agenda" abre um menu:
+
+- **Google Agenda:** link `calendar.google.com/calendar/render?action=TEMPLATE…` que abre o evento já preenchido (título, horário, endereço, médico e link de volta para a consulta), sem baixar arquivo. Os dados vão para o Google só quando a pessoa toca no botão, e nunca incluem a triagem.
+- **iPhone, Outlook e outros:** `GET` de um `.ics` por consulta (só o dono), com título, local, horário e status, servido como `inline` para o Safari do iPhone abrir direto "Adicionar ao Calendário".
+
+*Atualizado em 07/11/2026:* baixar o arquivo era estranho, e o Google Agenda no Android não abre `.ics` sozinho.
 
 ## Integração com o que existe
 
@@ -144,6 +150,12 @@ As referências visuais são os `.html` em `assets/`.
 ## Prazo e execução [autor]
 
 Sem data fixa: a ideia é avançar o máximo possível, com a versão completa de cada item (nada de versão simplificada por falta de tempo). Uma pessoa só implementa, então a entrega vai **feature por feature, de ponta a ponta** (API + web + mock juntos em cada etapa). Os planos são enxutos.
+
+## Decisões durante a implementação
+
+- **07/11/2026:** a lista de Minhas consultas e o cancelamento foram adiantados (antes do Perfil), porque sem eles não havia onde ver a consulta marcada.
+- **07/11/2026:** consulta confirmada ou pendente cujo horário já passou aparece como **"Encerrada"**, sem ações, até a clínica registrar "Realizada" ou "Faltou" no painel.
+- O registro completo das decisões de implementação, com o custo de cada uma se estiver errada, fica no ledger do plano (`.superpowers/`, fora do git); as que mudam o produto entram aqui.
 
 ## Deixado para o builder
 
