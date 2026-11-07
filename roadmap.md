@@ -14,7 +14,7 @@ Status: `em andamento` · `próximo` · `ideia` · `feito`
 
 ## Progresso da parte 1
 
-Branch `feat/clinics-scheduling` em `agendoc-api` e `agendoc-web` (sem deploy até o fim da parte).
+Os marcos aprovados entram na branch `develop` de `agendoc-api` e `agendoc-web`. O CI roda os testes nela, mas não faz deploy. No fim da parte, `develop` vai para a `main`, e aí acontece o deploy. O trabalho em andamento fica em `feat/clinics-scheduling`.
 
 | Marco | Conteúdo | Status |
 |---|---|---|
