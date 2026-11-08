@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root { --bg:#f5f8fc; --sunken:#ebf0f6; --line:#dfe5ee; --line-strong:#7d8aa0; --ink:#06214e; --muted:#4a5a73; --subtle:#5d6b82; --navy:#13376b; --blue:#1f69d2; --blue-soft:#e7effc; --teal:#2ec8b0; --teal-ink:#0b7566; --teal-soft:#e2f6f1; --danger:#c0362c; --danger-soft:#fdeceb; --warning:#965200; --warning-soft:#fff3dc; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink); font-family:"Plus Jakarta Sans",system-ui,sans-serif; }
+  .note { max-width:1320px; margin:16px auto 0; padding:12px 16px; border-radius:12px; background:#fff8e6; color:#6b4500; font-size:13px; line-height:19px; }
+  .shell { display:flex; max-width:1320px; margin:12px auto 40px; border-radius:20px; overflow:hidden; box-shadow:0 12px 32px -4px rgba(6,33,78,.18); }
+  .side { width:200px; flex:none; background:var(--navy); color:#fff; padding:20px 12px; font-size:14px; }
+  .side .brand { font-weight:800; font-size:17px; margin:0 8px 2px; } .side .clinic { color:#c9d6ea; font-size:12px; margin:0 8px 20px; }
+  .side a { display:flex; justify-content:space-between; padding:10px 12px; border-radius:8px; color:#fff; text-decoration:none; } .side a.on { background:#24497f; font-weight:700; }
+  .side .count { background:var(--teal); color:var(--ink); border-radius:99px; padding:0 8px; font-size:12px; font-weight:700; }
+  main { flex:1; min-width:0; padding:24px; }
+  .top { display:flex; justify-content:space-between; align-items:flex-end; gap:12px; flex-wrap:wrap; }
+  h1 { margin:0; font-size:24px; font-weight:800; } .lead { margin:2px 0 0; color:var(--muted); font-size:14px; }
+  .btn { height:42px; padding:0 18px; border-radius:12px; font:inherit; font-size:14px; font-weight:700; border:0; cursor:pointer; }
+  .primary { background:var(--blue); color:#fff; display:inline-flex; align-items:center; gap:8px; }
+  .primary svg { flex:none; } .ghost { background:#fff; border:1px solid var(--line); color:var(--muted); }
+  .bar { display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; margin:16px 0; }
+  .tabs { display:inline-flex; padding:3px; background:var(--sunken); border-radius:10px; }
+  .tabs button { font:inherit; font-size:13px; font-weight:700; border:0; background:transparent; padding:7px 14px; border-radius:8px; color:var(--muted); }
+  .tabs .on { background:#fff; color:var(--ink); box-shadow:0 1px 3px rgba(6,33,78,.12); }
+  .chips { display:flex; gap:6px; flex-wrap:wrap; }
+  .chip { display:inline-flex; align-items:center; gap:7px; height:32px; padding:0 12px; border-radius:99px; border:1px solid var(--line); background:#fff; font:inherit; font-size:12px; font-weight:600; color:var(--muted); }
+  .chip.on { background:var(--ink); color:#fff; border-color:var(--ink); } .chip i { width:9px; height:9px; border-radius:50%; }
+  .layout { display:grid; grid-template-columns:minmax(0,1fr) 360px; gap:16px; align-items:start; }
+  .month { height:32px; line-height:32px; margin:0;  font-size:12px; font-weight:800; color:var(--subtle); text-transform:uppercase; letter-spacing:.06em; }
+  .list { display:flex; flex-direction:column; gap:10px; margin-bottom:18px; }
+  .blk { display:grid; grid-template-columns:76px minmax(0,1fr) auto; gap:16px; align-items:center; padding:12px 14px 12px 12px; background:#fff; border:1px solid var(--line); border-radius:14px; position:relative; overflow:hidden; }
+  .blk::before { content:""; position:absolute; left:0; top:0; bottom:0; width:5px; background:var(--c); }
+  .date { width:68px; border-radius:12px; overflow:hidden; text-align:center; border:1px solid var(--line); margin-left:6px; }
+  .date .wd { background:var(--c); color:#fff; font-size:10px; font-weight:800; text-transform:uppercase; letter-spacing:.06em; padding:3px 0; }
+  .date .d { font-size:22px; font-weight:800; line-height:28px; padding-top:2px; }
+  .date .m { font-size:10px; color:var(--subtle); font-weight:700; text-transform:uppercase; padding-bottom:4px; }
+  .date.range .d { font-size:15px; line-height:22px; }
+  .date.range .wd { letter-spacing:0; font-size:9.5px; }
+  .date { width:72px; }
+  .info { display:flex; flex-direction:column; gap:6px; min-width:0; }
+  .line1 { display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+  .time { font-size:15px; font-weight:800; font-variant-numeric:tabular-nums; }
+  .dur { font-size:12px; font-weight:600; color:var(--subtle); }
+  .who { display:inline-flex; align-items:center; gap:6px; height:24px; padding:0 10px; border-radius:99px; font-size:12px; font-weight:700; background:color-mix(in srgb, var(--c) 12%, #fff); color:color-mix(in srgb, var(--c) 80%, #000); }
+  .who i { width:8px; height:8px; border-radius:50%; background:var(--c); }
+  .who.all { background:var(--ink); color:#fff; }
+  .reason { display:flex; align-items:center; gap:6px; font-size:13px; color:var(--muted); }
+  .reason .tag { font-size:11px; font-weight:800; text-transform:uppercase; letter-spacing:.04em; padding:2px 7px; border-radius:6px; background:var(--sunken); color:var(--subtle); }
+  .reason.none { font-style:italic; color:var(--subtle); }
+  .right { display:flex; align-items:center; gap:10px; }
+  .when { font-size:11px; font-weight:800; padding:3px 9px; border-radius:99px; background:var(--teal-soft); color:var(--teal-ink); white-space:nowrap; }
+  .when.now { background:var(--warning-soft); color:var(--warning); }
+  .del { width:36px; height:36px; border-radius:10px; border:1px solid var(--line); background:#fff; color:var(--muted); cursor:pointer; font-size:15px; }
+  .del:hover { color:var(--danger); border-color:#f3c3bf; background:var(--danger-soft); }
+
+  .form { margin-top:32px; background:#fff; border:1px solid var(--line); border-radius:16px; position:sticky; top:16px; overflow:hidden; }
+  .form h2 { margin:0; font-size:16px; padding:16px; border-bottom:1px solid var(--line); }
+  .fb { padding:16px; display:flex; flex-direction:column; gap:16px; }
+  .lbl { font-size:12px; font-weight:700; color:var(--muted); margin-bottom:6px; display:block; }
+  .seg { display:grid; grid-template-columns:1fr 1fr; padding:3px; background:var(--sunken); border-radius:10px; }
+  .seg button { font:inherit; font-size:13px; font-weight:700; border:0; background:transparent; padding:8px; border-radius:8px; color:var(--muted); }
+  .seg .on { background:#fff; color:var(--ink); box-shadow:0 1px 3px rgba(6,33,78,.12); }
+  .input { width:100%; height:40px; border-radius:10px; border:1px solid var(--line-strong); padding:0 10px; font:inherit; font-size:14px; color:var(--ink); background:#fff; }
+  .row2 { display:grid; grid-template-columns:1.3fr 1fr; gap:8px; }
+  .check { display:flex; align-items:center; gap:8px; font-size:13px; font-weight:600; }
+  .check span { width:18px; height:18px; border-radius:5px; background:var(--blue); color:#fff; display:grid; place-items:center; font-size:11px; }
+  .presets { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:8px; }
+  .presets button { font:inherit; font-size:12px; font-weight:700; height:30px; padding:0 10px; border-radius:99px; border:1px solid var(--line); background:#fff; color:var(--muted); }
+  .presets .on { border-color:var(--blue); background:var(--blue-soft); color:var(--blue); }
+  .warn { border-radius:12px; background:var(--warning-soft); padding:12px; font-size:13px; color:#6b4500; line-height:19px; }
+  .warn b { color:var(--warning); }
+  .warn ul { margin:6px 0 0; padding-left:18px; }
+  .ff { display:flex; gap:8px; justify-content:flex-end; padding:12px 16px; border-top:1px solid var(--line); }
+</style>
+</head>
+<body>
+<div class="note"><b>Mockup 3 (v2) — Bloqueios.</b> Ajustes: calendarinho de vários dias sem corte, “+” do botão alinhado (ícone de verdade, não texto) e o formulário começando na altura do primeiro bloqueio. Texto anterior: Cada bloqueio tem três zonas que nunca se misturam: <b>quando</b> (um “calendarinho” com o dia + o horário grande em negrito), <b>quem</b> (uma etiqueta na cor do médico, ou escura para “Clínica inteira”) e <b>por quê</b> (o motivo com uma etiqueta de tipo). A faixa colorida à esquerda repete a cor de quem está bloqueado, a mesma da agenda. Agrupado por mês, com abas Próximos/Passados e filtro por médico. O formulário de novo bloqueio fica ao lado: “Clínica inteira / Um médico”, “Dia inteiro”, motivos prontos e o aviso de consultas no período.</div>
+<div class="shell">
+  <nav class="side">
+    <p class="brand">AgenDoc</p><p class="clinic">Clínica Teste (demonstração)</p>
+    <a href="#">Agenda</a><a href="#">Solicitações <span class="count">6</span></a><a href="#">Médicos</a><a href="#">Horários</a><a class="on" href="#">Bloqueios</a><a href="#">Dados da clínica</a><a href="#">Avaliações</a>
+  </nav>
+  <main>
+    <div class="top">
+      <div><h1>Bloqueios</h1><p class="lead">Folgas, férias, feriados e reuniões. Nesses períodos ninguém consegue marcar.</p></div>
+      <button class="btn primary"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 2v12M2 8h12" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>Novo bloqueio</button>
+    </div>
+    <div class="bar">
+      <div class="tabs"><button class="on">Próximos · 4</button><button>Passados</button></div>
+      <div class="chips">
+        <button class="chip on">Todos</button>
+        <button class="chip"><i style="background:#06214e"></i>Clínica inteira</button>
+        <button class="chip"><i style="background:#1f69d2"></i>Camila Rocha</button>
+        <button class="chip"><i style="background:#7c4dcc"></i>Rafael Nogueira</button>
+        <button class="chip"><i style="background:#0b7566"></i>Teste</button>
+      </div>
+    </div>
+
+    <div class="layout">
+      <section>
+        <p class="month">Novembro de 2026</p>
+        <div class="list">
+          <div class="blk" style="--c:#0b7566">
+            <div class="date range"><div class="wd">seg–qua</div><div class="d">09–11</div><div class="m">nov</div></div>
+            <div class="info">
+              <div class="line1"><span class="time">seg 16:17 → qua 16:17</span><span class="dur">· 2 dias</span></div>
+              <div class="line1"><span class="who"><i></i>Teste</span><span class="reason none">Sem motivo informado</span></div>
+            </div>
+            <div class="right"><span class="when now">começa amanhã</span><button class="del" title="Excluir">🗑</button></div>
+          </div>
+          <div class="blk" style="--c:#1f69d2">
+            <div class="date"><div class="wd">qua</div><div class="d">11</div><div class="m">nov</div></div>
+            <div class="info">
+              <div class="line1"><span class="time">10:00 – 12:00</span><span class="dur">· 2 h</span></div>
+              <div class="line1"><span class="who"><i></i>Dra. Camila Rocha</span><span class="reason"><span class="tag">Reunião</span>Reunião da equipe</span></div>
+            </div>
+            <div class="right"><span class="when">em 3 dias</span><button class="del" title="Excluir">🗑</button></div>
+          </div>
+          <div class="blk" style="--c:#7c4dcc">
+            <div class="date"><div class="wd">qui</div><div class="d">19</div><div class="m">nov</div></div>
+            <div class="info">
+              <div class="line1"><span class="time">09:00 – 13:00</span><span class="dur">· 4 h</span></div>
+              <div class="line1"><span class="who"><i></i>Dr. Rafael Nogueira</span><span class="reason"><span class="tag">Congresso</span>Congresso de dermatologia</span></div>
+            </div>
+            <div class="right"><span class="when">em 11 dias</span><button class="del" title="Excluir">🗑</button></div>
+          </div>
+          <div class="blk" style="--c:#06214e">
+            <div class="date"><div class="wd">sex</div><div class="d">20</div><div class="m">nov</div></div>
+            <div class="info">
+              <div class="line1"><span class="time">Dia inteiro</span></div>
+              <div class="line1"><span class="who all">🏥 Clínica inteira</span><span class="reason"><span class="tag">Feriado</span>Dia da Consciência Negra</span></div>
+            </div>
+            <div class="right"><span class="when">em 12 dias</span><button class="del" title="Excluir">🗑</button></div>
+          </div>
+        </div>
+      </section>
+
+      <aside class="form">
+        <h2>Novo bloqueio</h2>
+        <div class="fb">
+          <div><span class="lbl">Quem fica bloqueado</span>
+            <div class="seg"><button>Clínica inteira</button><button class="on">Um médico</button></div>
+            <select class="input" style="margin-top:8px"><option>Dra. Camila Rocha</option></select>
+          </div>
+          <div><span class="lbl">Quando</span>
+            <div class="check" style="margin-bottom:8px"><span>✓</span>Dia inteiro</div>
+            <div class="row2"><input class="input" value="seg, 16/11/2026"><input class="input" value="até 16/11" ></div>
+          </div>
+          <div><span class="lbl">Motivo</span>
+            <div class="presets"><button>Férias</button><button>Folga</button><button class="on">Congresso</button><button>Feriado</button><button>Reunião</button><button>Outro</button></div>
+            <input class="input" value="Congresso Brasileiro de Cardiologia">
+          </div>
+          <div class="warn"><b>2 consultas neste período</b> serão afetadas:
+            <ul><li>Ana Beatriz Souza · 09:00 · confirmada</li><li>Bruno Carvalho · 10:30 · aguardando</li></ul>
+            <div class="check" style="margin-top:8px"><span>✓</span>Cancelar e avisar os pacientes</div>
+            <input class="input" style="margin-top:8px" value="A médica estará em um congresso.">
+          </div>
+        </div>
+        <div class="ff"><button class="btn ghost">Cancelar</button><button class="btn primary">Bloquear</button></div>
+      </aside>
+    </div>
+  </main>
+</div>
+</body>
+</html>

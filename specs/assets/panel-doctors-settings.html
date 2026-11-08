@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root { --bg:#f5f8fc; --sunken:#ebf0f6; --line:#dfe5ee; --line-strong:#7d8aa0; --ink:#06214e; --muted:#4a5a73; --subtle:#5d6b82; --navy:#13376b; --blue:#1f69d2; --blue-soft:#e7effc; --teal:#2ec8b0; --teal-ink:#0b7566; --teal-soft:#e2f6f1; --danger:#c0362c; --danger-soft:#fdeceb; --warning:#965200; --warning-soft:#fff3dc; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink); font-family:"Plus Jakarta Sans",system-ui,sans-serif; }
+  .note { max-width:1320px; margin:16px auto 0; padding:12px 16px; border-radius:12px; background:#fff8e6; color:#6b4500; font-size:13px; line-height:19px; }
+  .frame { max-width:1320px; margin:12px auto 28px; border-radius:20px; overflow:hidden; box-shadow:0 12px 32px -4px rgba(6,33,78,.18); background:var(--bg); padding:24px; }
+  .frame > .tag { display:inline-block; font-size:11px; font-weight:800; letter-spacing:.06em; text-transform:uppercase; color:var(--subtle); margin-bottom:6px; }
+  h1 { margin:0; font-size:24px; font-weight:800; } .lead { margin:2px 0 16px; color:var(--muted); font-size:14px; }
+  .top { display:flex; justify-content:space-between; align-items:flex-end; gap:12px; margin-bottom:20px; }
+  .top .lead { margin-bottom:0; }
+  .btn { height:42px; padding:0 18px; border-radius:12px; font:inherit; font-size:14px; font-weight:700; border:0; cursor:pointer; display:inline-flex; align-items:center; gap:8px; }
+  .primary { background:var(--blue); color:#fff; } .ghost { background:#fff; border:1px solid var(--line); color:var(--muted); }
+  .card { background:#fff; border:1px solid var(--line); border-radius:16px; }
+
+  /* Médicos */
+  .layout { display:grid; grid-template-columns:minmax(0,1fr) 420px; gap:16px; align-items:start; }
+  .docs { display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:12px; }
+  .doc { padding:16px; display:flex; flex-direction:column; gap:12px; position:relative; }
+  .doc.sel { border-color:var(--blue); box-shadow:0 0 0 3px var(--blue-soft); }
+  .doc.off { opacity:.7; }
+  .dh { display:flex; gap:12px; align-items:center; }
+  .av { width:44px; height:44px; border-radius:50%; display:grid; place-items:center; font-weight:800; color:#fff; background:var(--c); flex:none; }
+  .dn { font-weight:800; font-size:15px; margin:0; } .crm { font-size:12px; color:var(--subtle); font-weight:600; }
+  .st { margin-left:auto; font-size:11px; font-weight:800; padding:3px 9px; border-radius:99px; background:var(--teal-soft); color:var(--teal-ink); }
+  .st.off { background:var(--sunken); color:var(--subtle); }
+  .specs { display:flex; flex-direction:column; gap:6px; }
+  .sp { display:grid; grid-template-columns:1fr auto auto; gap:10px; align-items:center; padding:8px 10px; border-radius:10px; background:var(--sunken); font-size:13px; }
+  .sp b { font-weight:700; } .sp span { color:var(--muted); font-weight:600; font-variant-numeric:tabular-nums; }
+  .dfoot { display:flex; justify-content:space-between; align-items:center; font-size:12px; color:var(--subtle); font-weight:600; border-top:1px solid var(--line); padding-top:10px; }
+  .link { color:var(--blue); font-weight:700; font-size:13px; }
+
+  .editor { position:sticky; top:16px; overflow:hidden; }
+  .editor h2 { margin:0; font-size:16px; padding:16px; border-bottom:1px solid var(--line); display:flex; justify-content:space-between; align-items:center; }
+  .eb { padding:16px; display:flex; flex-direction:column; gap:16px; }
+  .lbl { display:block; font-size:12px; font-weight:700; color:var(--muted); margin-bottom:6px; }
+  .input { width:100%; height:40px; border-radius:10px; border:1px solid var(--line-strong); padding:0 10px; font:inherit; font-size:14px; color:var(--ink); background:#fff; }
+  .r2 { display:grid; grid-template-columns:1fr 90px; gap:8px; }
+  .seg { display:grid; grid-template-columns:1fr 1fr; padding:3px; background:var(--sunken); border-radius:10px; }
+  .seg button { font:inherit; font-size:13px; font-weight:700; border:0; background:transparent; padding:8px; border-radius:8px; color:var(--muted); }
+  .seg .on { background:#fff; color:var(--teal-ink); box-shadow:0 1px 3px rgba(6,33,78,.12); }
+  .stable { border:1px solid var(--line); border-radius:12px; overflow:hidden; }
+  .stable .h, .stable .r { display:grid; grid-template-columns:1fr 92px 104px 32px; gap:6px; align-items:center; padding:8px 10px; }
+  .stable .h { background:#fbfcfe; font-size:10px; font-weight:800; color:var(--subtle); text-transform:uppercase; letter-spacing:.05em; border-bottom:1px solid var(--line); }
+  .stable .r + .r { border-top:1px solid var(--line); }
+  .stable select, .stable .money { height:34px; border-radius:8px; border:1px solid var(--line-strong); font:inherit; font-size:13px; font-weight:600; padding:0 6px; background:#fff; color:var(--ink); width:100%; }
+  .money { display:flex; align-items:center; gap:4px; } .money em { font-style:normal; color:var(--subtle); font-size:12px; }
+  .x { width:30px; height:30px; border:0; border-radius:8px; background:transparent; color:var(--muted); font-size:15px; cursor:pointer; }
+  .x:hover { background:var(--danger-soft); color:var(--danger); }
+  .addrow { display:flex; align-items:center; justify-content:center; gap:6px; height:38px; border-top:1px dashed var(--line); color:var(--blue); font-size:13px; font-weight:700; background:#fff; }
+  .hint { font-size:12px; color:var(--subtle); line-height:18px; background:var(--sunken); border-radius:10px; padding:10px 12px; }
+  .ef { display:flex; justify-content:flex-end; gap:8px; padding:12px 16px; border-top:1px solid var(--line); }
+
+  /* Dados */
+  .sect { padding:18px; margin-bottom:14px; }
+  .sect h3 { margin:0; font-size:15px; } .sect .sub { margin:2px 0 14px; color:var(--subtle); font-size:13px; }
+  .sh { display:flex; justify-content:space-between; align-items:flex-start; gap:12px; }
+  .counter { font-size:12px; font-weight:800; padding:4px 10px; border-radius:99px; background:var(--blue-soft); color:var(--blue); white-space:nowrap; }
+  .ins { display:grid; grid-template-columns:repeat(auto-fill,minmax(170px,1fr)); gap:10px; }
+  .in { position:relative; display:flex; align-items:center; gap:10px; padding:12px; border-radius:12px; border:1.5px solid var(--line); background:#fff; cursor:pointer; transition:border-color .12s, background .12s; }
+  .in:hover { border-color:var(--line-strong); }
+  .mono { width:36px; height:36px; border-radius:10px; display:grid; place-items:center; font-weight:800; font-size:13px; color:#fff; background:var(--c); flex:none; }
+  .in b { font-size:13px; line-height:16px; }
+  .in .ck { position:absolute; top:-7px; right:-7px; width:20px; height:20px; border-radius:50%; background:var(--blue); color:#fff; font-size:11px; display:none; place-items:center; border:2px solid #fff; }
+  .in.on { border-color:var(--blue); background:var(--blue-soft); }
+  .in.on .ck { display:grid; }
+  .in.off .mono { filter:grayscale(1); opacity:.5; }
+  .in.locked { background:var(--sunken); border-style:dashed; cursor:default; }
+  .in.locked small { display:block; font-size:11px; color:var(--subtle); font-weight:600; }
+  .modes { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  .mode { padding:14px; border-radius:12px; border:1.5px solid var(--line); display:flex; gap:12px; }
+  .mode .rd { width:20px; height:20px; border-radius:50%; border:2px solid var(--line-strong); flex:none; margin-top:1px; }
+  .mode.on { border-color:var(--blue); background:var(--blue-soft); } .mode.on .rd { border:6px solid var(--blue); }
+  .mode b { display:block; font-size:14px; } .mode span { font-size:12px; color:var(--muted); line-height:17px; }
+  .gl { display:flex; flex-direction:column; gap:8px; }
+  .g { display:grid; grid-template-columns:24px 26px 1fr 32px; gap:8px; align-items:center; padding:8px 10px; border-radius:10px; border:1px solid var(--line); background:#fff; font-size:13px; }
+  .g .grip { color:#b9c3d3; cursor:grab; letter-spacing:-2px; } .g .n { width:24px; height:24px; border-radius:50%; background:var(--teal-soft); color:var(--teal-ink); display:grid; place-items:center; font-size:11px; font-weight:800; }
+  .gadd { height:38px; border-radius:10px; border:1px dashed var(--line-strong); display:flex; align-items:center; justify-content:center; gap:6px; color:var(--blue); font-size:13px; font-weight:700; }
+  .two { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+</style>
+</head>
+<body>
+<div class="note"><b>Mockup 4 — Médicos e Dados da clínica.</b> <b>Médicos:</b> cada médico vira um cartão com a cor dele (a mesma da agenda), as especialidades com duração e preço, e o resumo da semana. A edição abre ao lado: dados básicos, “Ativo / Inativo” e uma tabelinha de especialidades (especialidade · duração · preço) com “+ Adicionar especialidade”. <b>Dados da clínica:</b> convênios viram cartões selecionáveis com a sigla colorida e um ✓; “Particular” aparece fixo; o modo de confirmação vira dois cartões de escolha; as orientações viram uma lista numerada que dá para reordenar.</div>
+
+<div class="frame">
+  <span class="tag">Médicos</span>
+  <div class="top"><div><h1>Médicos</h1><p class="lead">Quem atende na clínica, em quais especialidades e por quanto.</p></div>
+    <button class="btn primary"><svg width="16" height="16" viewBox="0 0 16 16"><path d="M8 2v12M2 8h12" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>Novo médico</button></div>
+  <div class="layout">
+    <div class="docs">
+      <div class="card doc sel" style="--c:#1f69d2">
+        <div class="dh"><span class="av">CR</span><div><p class="dn">Dra. Camila Rocha</p><span class="crm">CRM-SP 184522</span></div><span class="st">Ativa</span></div>
+        <div class="specs"><div class="sp"><b>Cardiologista</b><span>30 min</span><span>R$ 350</span></div><div class="sp"><b>Clínico Geral</b><span>20 min</span><span>R$ 200</span></div></div>
+        <div class="dfoot"><span>seg a sex · 40 h/semana</span><span class="link">Editar</span></div>
+      </div>
+      <div class="card doc" style="--c:#7c4dcc">
+        <div class="dh"><span class="av">RN</span><div><p class="dn">Dr. Rafael Nogueira</p><span class="crm">CRM-SP 203117</span></div><span class="st">Ativo</span></div>
+        <div class="specs"><div class="sp"><b>Dermatologista</b><span>20 min</span><span>R$ 280</span></div></div>
+        <div class="dfoot"><span>ter, qui e sáb · 12 h/semana</span><span class="link">Editar</span></div>
+      </div>
+      <div class="card doc" style="--c:#d9662b">
+        <div class="dh"><span class="av">JP</span><div><p class="dn">Dra. Juliana Prado</p><span class="crm">CRM-SP 176840</span></div><span class="st">Ativa</span></div>
+        <div class="specs"><div class="sp"><b>Pediatra</b><span>30 min</span><span>R$ 250</span></div></div>
+        <div class="dfoot"><span>seg, qua e sex · 18 h/semana</span><span class="link">Editar</span></div>
+      </div>
+      <div class="card doc off" style="--c:#7d8aa0">
+        <div class="dh"><span class="av">PM</span><div><p class="dn">Dr. Paulo Mendes</p><span class="crm">CRM-SP 158903</span></div><span class="st off">Inativo</span></div>
+        <div class="specs"><div class="sp"><b>Ortopedista</b><span>30 min</span><span>R$ 300</span></div></div>
+        <div class="dfoot"><span>não aparece para os pacientes</span><span class="link">Editar</span></div>
+      </div>
+    </div>
+
+    <aside class="card editor">
+      <h2>Editar médico <span style="font-size:12px;color:var(--subtle);font-weight:600">Dra. Camila Rocha</span></h2>
+      <div class="eb">
+        <div><span class="lbl">Nome</span><input class="input" value="Dra. Camila Rocha"></div>
+        <div class="r2"><div><span class="lbl">CRM</span><input class="input" value="184522"></div><div><span class="lbl">UF</span><select class="input"><option>SP</option></select></div></div>
+        <div><span class="lbl">Situação</span><div class="seg"><button class="on">Ativo</button><button>Inativo</button></div></div>
+        <div><span class="lbl">Especialidades</span>
+          <div class="stable">
+            <div class="h"><span>Especialidade</span><span>Duração</span><span>Particular</span><span></span></div>
+            <div class="r"><select><option>Cardiologista</option></select><select><option>30 min</option></select><div class="money"><em>R$</em>350,00</div><button class="x">×</button></div>
+            <div class="r"><select><option>Clínico Geral</option></select><select><option>20 min</option></select><div class="money"><em>R$</em>200,00</div><button class="x">×</button></div>
+            <div class="addrow">+ Adicionar especialidade</div>
+          </div>
+        </div>
+        <div class="hint">A agenda é uma só: uma consulta de qualquer especialidade ocupa o mesmo horário do médico. Os horários de atendimento ficam em <b>Horários</b>.</div>
+      </div>
+      <div class="ef"><button class="btn ghost">Cancelar</button><button class="btn primary">Salvar</button></div>
+    </aside>
+  </div>
+</div>
+
+<div class="frame">
+  <span class="tag">Dados da clínica</span>
+  <h1>Dados da clínica</h1><p class="lead">O que o paciente vê sobre a clínica e como os pedidos são confirmados.</p>
+
+  <section class="card sect">
+    <div class="sh"><div><h3>Convênios aceitos</h3><p class="sub">Toque para marcar ou desmarcar. O paciente só vê os convênios marcados.</p></div><span class="counter">4 de 7 convênios</span></div>
+    <div class="ins">
+      <div class="in locked"><span class="mono" style="--c:#0b7566">R$</span><div><b>Particular</b><small>sempre aceito</small></div></div>
+      <div class="in on" style="--c:#1f69d2"><span class="mono">U</span><b>Unimed</b><span class="ck">✓</span></div>
+      <div class="in on" style="--c:#7c4dcc"><span class="mono">B</span><b>Bradesco Saúde</b><span class="ck">✓</span></div>
+      <div class="in on" style="--c:#d9662b"><span class="mono">SA</span><b>SulAmérica</b><span class="ck">✓</span></div>
+      <div class="in on" style="--c:#13376b"><span class="mono">A</span><b>Amil</b><span class="ck">✓</span></div>
+      <div class="in off" style="--c:#0b7566"><span class="mono">H</span><b>Hapvida</b><span class="ck">✓</span></div>
+      <div class="in off" style="--c:#b8457a"><span class="mono">NI</span><b>NotreDame Intermédica</b><span class="ck">✓</span></div>
+      <div class="in off" style="--c:#5d6b82"><span class="mono">P</span><b>Porto Saúde</b><span class="ck">✓</span></div>
+    </div>
+  </section>
+
+  <div class="two">
+    <section class="card sect">
+      <h3>Como os pedidos são confirmados</h3><p class="sub">Vale para todas as consultas novas.</p>
+      <div class="modes">
+        <div class="mode"><span class="rd"></span><div><b>Automática</b><span>O horário é confirmado na hora. Bom para quem não tem recepção dedicada.</span></div></div>
+        <div class="mode on"><span class="rd"></span><div><b>A clínica confirma</b><span>Cada pedido espera você aceitar até o fim do próximo dia de atendimento.</span></div></div>
+      </div>
+    </section>
+    <section class="card sect">
+      <h3>Orientações para o paciente</h3><p class="sub">Aparecem na confirmação da consulta, nesta ordem.</p>
+      <div class="gl">
+        <div class="g"><span class="grip">⋮⋮</span><span class="n">1</span>Chegue 15 minutos antes.<button class="x">×</button></div>
+        <div class="g"><span class="grip">⋮⋮</span><span class="n">2</span>Traga documento com foto e a carteirinha do convênio.<button class="x">×</button></div>
+        <div class="g"><span class="grip">⋮⋮</span><span class="n">3</span>Exames anteriores ajudam na consulta.<button class="x">×</button></div>
+        <div class="gadd">+ Adicionar orientação</div>
+      </div>
+    </section>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#f5f8fc; --surface:#fff; --sunken:#ebf0f6; --line:#dfe5ee; --line-strong:#7d8aa0;
+    --ink:#06214e; --muted:#4a5a73; --subtle:#5d6b82; --navy:#13376b; --blue:#1f69d2; --blue-soft:#e7effc;
+    --teal:#2ec8b0; --teal-ink:#0b7566; --teal-soft:#e2f6f1; --danger:#c0362c; --danger-soft:#fdeceb;
+    --warning:#965200; --warning-soft:#fff3dc;
+    --camila:#1f69d2; --rafael:#7c4dcc; --juliana:#d9662b; --teste:#0b7566;
+    --px: 1.35px; /* per minute */
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink); font-family:"Plus Jakarta Sans",system-ui,sans-serif; }
+  .note { max-width:1320px; margin:16px auto 0; padding:12px 16px; border-radius:12px; background:#fff8e6; color:#6b4500; font-size:13px; line-height:19px; }
+  .note b { color:#4a3000; }
+  .shell { display:flex; max-width:1320px; margin:12px auto 40px; border-radius:20px; overflow:hidden; box-shadow:0 12px 32px -4px rgba(6,33,78,.18); }
+  .side { width:200px; background:var(--navy); color:#fff; padding:20px 12px; font-size:14px; }
+  .side .brand { font-weight:800; font-size:17px; margin:0 8px 2px; }
+  .side .clinic { color:#c9d6ea; font-size:12px; margin:0 8px 20px; }
+  .side a { display:flex; justify-content:space-between; padding:10px 12px; border-radius:8px; color:#fff; text-decoration:none; }
+  .side a.on { background:#24497f; font-weight:700; }
+  .side .count { background:var(--teal); color:var(--ink); border-radius:99px; padding:0 8px; font-size:12px; font-weight:700; }
+  main { flex:1; min-width:0; background:var(--bg); padding:24px; }
+
+  /* header */
+  .top { display:flex; align-items:flex-end; justify-content:space-between; gap:16px; flex-wrap:wrap; }
+  h1 { margin:0; font-size:24px; font-weight:800; }
+  .lead { margin:2px 0 0; color:var(--muted); font-size:14px; }
+  .pendingPill { display:inline-flex; align-items:center; gap:8px; padding:8px 14px; border-radius:99px; background:var(--warning-soft); color:var(--warning); font-size:13px; font-weight:700; text-decoration:none; border:1px solid #f0d9a8; }
+  .pendingPill .dot { width:8px; height:8px; border-radius:50%; background:#e09a1f; }
+
+  /* toolbar */
+  .toolbar { margin-top:16px; display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; padding:10px; background:var(--surface); border:1px solid var(--line); border-radius:16px; }
+  .weeknav { display:flex; align-items:center; gap:6px; }
+  .navbtn { width:38px; height:38px; border-radius:10px; border:1px solid var(--line); background:#fff; color:var(--ink); font-size:18px; cursor:pointer; transition:background .12s, transform .06s; }
+  .navbtn:hover { background:var(--blue-soft); border-color:#bcd1f2; }
+  .navbtn:active { transform:scale(.94); background:#d6e4fa; }
+  .range { padding:0 10px; font-weight:800; font-size:16px; min-width:200px; text-align:center; }
+  .range small { display:block; color:var(--subtle); font-size:12px; font-weight:500; }
+  .today { height:38px; padding:0 14px; border-radius:10px; border:1px solid var(--line); background:#fff; font:inherit; font-size:13px; font-weight:700; color:var(--blue); cursor:pointer; }
+  .today:hover { background:var(--blue-soft); }
+  .chips { display:flex; gap:6px; flex-wrap:wrap; }
+  .chip { display:inline-flex; align-items:center; gap:7px; height:34px; padding:0 12px; border-radius:99px; border:1px solid var(--line); background:#fff; font-size:13px; font-weight:600; color:var(--muted); cursor:pointer; }
+  .chip:hover { border-color:var(--line-strong); }
+  .chip.on { background:var(--ink); color:#fff; border-color:var(--ink); }
+  .chip i { width:9px; height:9px; border-radius:50%; display:inline-block; }
+
+  /* layout */
+  .layout { display:grid; grid-template-columns:minmax(0,1fr) 320px; gap:16px; margin-top:16px; align-items:start; }
+  .card { background:var(--surface); border:1px solid var(--line); border-radius:16px; }
+
+  /* calendar */
+  .cal { overflow:hidden; }
+  .calhead { display:grid; grid-template-columns:52px repeat(6,minmax(0,1fr)) minmax(0,.45fr); border-bottom:1px solid var(--line); position:sticky; top:0; background:#fff; z-index:3; }
+  .calhead div { padding:10px 4px 8px; text-align:center; font-size:12px; color:var(--subtle); font-weight:600; text-transform:uppercase; letter-spacing:.04em; }
+  .calhead b { display:block; font-size:20px; color:var(--ink); text-transform:none; letter-spacing:0; }
+  .calhead .isToday b { background:var(--blue); color:#fff; border-radius:99px; width:34px; height:34px; line-height:34px; margin:2px auto 0; }
+  .calhead .holiday { color:var(--danger); }
+  .grid { display:grid; grid-template-columns:52px repeat(6,minmax(0,1fr)) minmax(0,.45fr); position:relative; height:calc(720 * var(--px)); }
+  .hours { position:relative; }
+  .hours span { position:absolute; right:8px; transform:translateY(-50%); font-size:11px; color:var(--subtle); font-weight:600; }
+  .col { position:relative; border-left:1px solid var(--line); background:var(--sunken); }
+  .open { position:absolute; left:0; right:0; background:#fff; }
+  .lines { position:absolute; inset:0 0 0 52px; pointer-events:none;
+    background-image:linear-gradient(to bottom, var(--line) 1px, transparent 1px);
+    background-size:100% calc(60 * var(--px)); }
+  .ev { position:absolute; left:3px; right:3px; display:flex; align-items:center; gap:5px; border-radius:7px; padding:0 6px 0 5px; font-size:12px; line-height:15px; white-space:nowrap; overflow:hidden; cursor:pointer; border-left:4px solid var(--c); background:color-mix(in srgb, var(--c) 13%, #fff); color:var(--ink); transition:box-shadow .12s; z-index:2; }
+  .ev:hover { box-shadow:0 4px 12px rgba(6,33,78,.14); z-index:5; }
+  .ev b { font-weight:700; overflow:hidden; text-overflow:ellipsis; min-width:0; }
+  .ev .t { color:var(--muted); font-weight:600; font-size:11px; flex:none; }
+  .ev .s { display:none; }
+  .ev .st { flex:none; width:16px; height:16px; border-radius:50%; display:grid; place-items:center; font-size:10px; font-weight:800; }
+  .ev.pending { background:#fffaf0; border:1px dashed #d99a2b; border-left:4px solid var(--c); }
+  .ev.pending .st { background:var(--warning-soft); color:var(--warning); }
+  .ev.late .st { background:var(--danger-soft); color:var(--danger); }
+  .ev.tall { flex-direction:column; align-items:flex-start; justify-content:center; gap:0; }
+  .ev.tall .row { display:flex; gap:5px; align-items:center; max-width:100%; }
+  .ev.sel { outline:2px solid var(--blue); outline-offset:1px; box-shadow:0 6px 16px rgba(31,105,210,.25); }
+  .ev.half { right:auto; width:calc(50% - 6px); }
+  .ev.half2 { left:50%; }
+  .blk { position:absolute; left:0; right:0; z-index:1; background:repeating-linear-gradient(45deg, rgba(93,107,130,.16) 0 6px, rgba(93,107,130,.04) 6px 12px); border-top:2px solid var(--line-strong); padding:4px 6px; font-size:11px; line-height:14px; color:var(--muted); font-weight:600; }
+  .blk span { display:inline-flex; align-items:center; gap:4px; background:#fff; border-radius:6px; padding:2px 6px; box-shadow:0 1px 2px rgba(6,33,78,.08); }
+  .blk.whole { top:0; bottom:0; border-top:0; }
+  .now { position:absolute; left:52px; right:0; height:2px; background:var(--danger); z-index:4; }
+  .now::before { content:""; position:absolute; left:-5px; top:-4px; width:10px; height:10px; border-radius:50%; background:var(--danger); }
+  .legend { display:flex; gap:6px 14px; flex-wrap:wrap; align-items:center; padding:10px 14px; border-bottom:1px solid var(--line); background:#fbfcfe; font-size:12px; color:var(--muted); font-weight:500; }
+  .legend .lt { font-weight:700; color:var(--ink); margin-right:2px; }
+  .legend i { display:inline-block; width:14px; height:12px; border-radius:3px; margin-right:6px; vertical-align:-1px; }
+  .legend .st { display:inline-grid; place-items:center; width:16px; height:16px; border-radius:50%; font-size:10px; font-weight:800; margin-right:5px; vertical-align:-3px; }
+
+  /* detail */
+  .detail { position:sticky; top:16px; overflow:hidden; }
+  .dhead { padding:16px; display:flex; gap:12px; align-items:center; border-bottom:1px solid var(--line); }
+  .avatar { width:44px; height:44px; border-radius:50%; background:var(--blue-soft); color:var(--blue); display:grid; place-items:center; font-weight:800; }
+  .dname { font-size:17px; font-weight:800; margin:0; }
+  .badge { display:inline-flex; align-items:center; gap:5px; padding:2px 9px; border-radius:99px; font-size:11px; font-weight:800; margin-top:3px; }
+  .b-pending { background:var(--warning-soft); color:var(--warning); }
+  .deadline { margin:12px 16px 0; padding:10px 12px; border-radius:10px; background:var(--warning-soft); color:var(--warning); font-size:13px; font-weight:600; display:flex; gap:8px; align-items:center; }
+  .rows { padding:6px 16px 4px; }
+  .r { display:flex; gap:12px; padding:10px 0; border-bottom:1px solid var(--line); align-items:flex-start; }
+  .r:last-child { border-bottom:0; }
+  .ic { width:32px; height:32px; flex:none; border-radius:9px; background:var(--sunken); display:grid; place-items:center; font-size:15px; }
+  .r small { display:block; color:var(--subtle); font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:.04em; }
+  .r div { font-size:14px; font-weight:600; }
+  .r .sub { font-weight:500; color:var(--muted); font-size:13px; }
+  .contact { display:flex; gap:6px; margin-top:6px; }
+  .mini { font:inherit; font-size:12px; font-weight:700; padding:5px 10px; border-radius:8px; border:1px solid var(--line); background:#fff; color:var(--blue); }
+  .triage { margin:4px 16px 12px; border-radius:12px; border:1px solid #cfe0f8; background:linear-gradient(180deg,#f2f7fe,#fff); padding:12px; }
+  .triage h4 { margin:0 0 6px; font-size:13px; display:flex; justify-content:space-between; align-items:center; }
+  .urg { font-size:10px; font-weight:800; text-transform:uppercase; padding:2px 8px; border-radius:99px; background:var(--warning-soft); color:var(--warning); }
+  .triage p { margin:0 0 6px; font-size:13px; line-height:19px; }
+  .triage .ai { font-size:11px; color:var(--subtle); margin:0; }
+  .actions { display:grid; grid-template-columns:1fr 1fr; gap:8px; padding:12px 16px 16px; border-top:1px solid var(--line); }
+  .btn { height:44px; border-radius:12px; font:inherit; font-size:14px; font-weight:700; border:0; cursor:pointer; }
+  .primary { background:var(--blue); color:#fff; }
+  .ghost { background:#fff; border:1px solid var(--line); color:var(--danger); }
+</style>
+</head>
+<body>
+<div class="note"><b>Mockup 1 (v3) — Agenda.</b> Padrão único: o nome do paciente vem sempre primeiro. Cartões de 30 min ou mais mostram o horário na segunda linha; nos de 20 min só cabe o nome, e o horário já é dado pela linha da grade; nome longo termina em “…” e o nome completo aparece ao passar o mouse. A legenda subiu para o topo do calendário. Domingo fechado fica estreito para sobrar espaço nos outros dias. O calendário passa a ser uma grade de horas de verdade: cada consulta ocupa a altura da sua duração (20 ou 30 min convivem bem, o que resolve a duração por especialidade), cada médico tem uma cor, o horário de atendimento fica branco e o resto cinza, e os bloqueios aparecem hachurados dentro do próprio dia, com o motivo. O detalhe à direita acompanha o scroll e começa alinhado com o calendário. As setas ganham hover, clique e um carregamento visível.</div>
+<div class="shell">
+  <nav class="side">
+    <p class="brand">AgenDoc</p><p class="clinic">Clínica Teste (demonstração)</p>
+    <a class="on" href="#">Agenda</a><a href="#">Solicitações <span class="count">6</span></a><a href="#">Médicos</a><a href="#">Horários</a><a href="#">Bloqueios</a><a href="#">Dados da clínica</a><a href="#">Avaliações</a>
+  </nav>
+  <main>
+    <div class="top">
+      <div><h1>Agenda</h1><p class="lead">Consultas, pedidos e bloqueios da semana.</p></div>
+      <a class="pendingPill" href="#"><span class="dot"></span>6 pedidos aguardando resposta →</a>
+    </div>
+
+    <div class="toolbar">
+      <div class="weeknav">
+        <button class="navbtn" title="Semana anterior">‹</button>
+        <div class="range">9 – 15 de novembro<small>2026 · semana 46</small></div>
+        <button class="navbtn" title="Próxima semana">›</button>
+        <button class="today">Hoje</button>
+      </div>
+      <div class="chips">
+        <button class="chip on">Todos os médicos</button>
+        <button class="chip"><i style="background:var(--camila)"></i>Camila Rocha</button>
+        <button class="chip"><i style="background:var(--rafael)"></i>Rafael Nogueira</button>
+        <button class="chip"><i style="background:var(--juliana)"></i>Juliana Prado</button>
+        <button class="chip"><i style="background:var(--teste)"></i>Teste</button>
+      </div>
+    </div>
+
+    <div class="layout">
+      <section class="card cal"><div class="legend"><span class="lt">Legenda</span>
+  <span><i style="background:color-mix(in srgb,var(--camila) 13%,#fff);border-left:3px solid var(--camila)"></i>confirmada (cor do médico)</span>
+  <span><span class="st" style="background:var(--warning-soft);color:var(--warning)">?</span>aguardando você</span>
+  <span><span class="st" style="background:var(--danger-soft);color:var(--danger)">!</span>prazo vencido</span>
+  <span>↻ remarcação</span>
+  <span><i style="background:#fff;border:1px solid var(--line)"></i>livre</span>
+  <span><i style="background:var(--sunken)"></i>fechado</span>
+  <span><i style="background:repeating-linear-gradient(45deg,rgba(93,107,130,.35) 0 3px,transparent 3px 6px)"></i>bloqueado</span></div><div class="calhead"><div></div><div>seg<b>9</b></div><div>ter<b>10</b></div><div>qua<b>11</b></div><div>qui<b>12</b></div><div>sex<b>13</b></div><div>sáb<b>14</b></div><div>dom<b>15</b></div></div><div class="grid"><div class="hours"><span style="top:calc(60*var(--px))">08:00</span><span style="top:calc(120*var(--px))">09:00</span><span style="top:calc(180*var(--px))">10:00</span><span style="top:calc(240*var(--px))">11:00</span><span style="top:calc(300*var(--px))">12:00</span><span style="top:calc(360*var(--px))">13:00</span><span style="top:calc(420*var(--px))">14:00</span><span style="top:calc(480*var(--px))">15:00</span><span style="top:calc(540*var(--px))">16:00</span><span style="top:calc(600*var(--px))">17:00</span><span style="top:calc(660*var(--px))">18:00</span></div><div class="col"><div class="open" style="top:calc(60*var(--px));height:calc(660*var(--px))"></div><div class="ev tall" style="--c:var(--camila);top:calc(60*var(--px));height:calc(30*var(--px))" title="08:00 Carla M."><span class="row"><b>Carla M.</b></span><span class="row"><span class="t">08:00</span></span></div><div class="ev tall" style="--c:var(--camila);top:calc(120*var(--px));height:calc(30*var(--px))" title="09:00 Ana S."><span class="row"><b>Ana S.</b></span><span class="row"><span class="t">09:00</span></span></div><div class="ev tall" style="--c:var(--camila);top:calc(180*var(--px));height:calc(30*var(--px))" title="10:00 Bruno C."><span class="row"><b>Bruno C.</b></span><span class="row"><span class="t">10:00</span></span></div><div class="ev pending tall" style="--c:var(--teste);top:calc(240*var(--px));height:calc(30*var(--px))" title="11:00 Eduarda L."><span class="row"><span class="st">?</span><b>Eduarda L.</b></span><span class="row"><span class="t">11:00</span></span></div><div class="ev tall" style="--c:var(--juliana);top:calc(420*var(--px));height:calc(30*var(--px))" title="14:00 Bruno C."><span class="row"><b>Bruno C.</b></span><span class="row"><span class="t">14:00 · Pediatra</span></span></div><div class="blk" style="top:calc(557*var(--px));bottom:0"><span>⛔ Teste · até qua 16:17</span></div></div><div class="col"><div class="open" style="top:calc(60*var(--px));height:calc(600*var(--px))"></div><div class="ev" style="--c:var(--rafael);top:calc(120*var(--px));height:calc(20*var(--px))" title="09:00 Gabriela M."><b>Gabriela M.</b></div><div class="ev pending tall" style="--c:var(--camila);top:calc(450*var(--px));height:calc(30*var(--px))" title="14:30 Carla M."><span class="row"><span class="st">?</span><b>Carla M.</b></span><span class="row"><span class="t">14:30</span></span></div></div><div class="col"><div class="open" style="top:calc(60*var(--px));height:calc(660*var(--px))"></div><div class="ev tall" style="--c:var(--camila);top:calc(90*var(--px));height:calc(30*var(--px))" title="08:30 Diego F."><span class="row"><b>Diego F.</b></span><span class="row"><span class="t">08:30</span></span></div><div class="blk" style="top:calc(180*var(--px));height:calc(120*var(--px))"><span>⛔ Camila · Reunião da equipe</span></div><div class="ev pending late tall" style="--c:var(--juliana);top:calc(540*var(--px));height:calc(30*var(--px))" title="16:00 Felipe A."><span class="row"><span class="st">!</span><b>Felipe A.</b></span><span class="row"><span class="t">16:00</span></span></div></div><div class="col"><div class="open" style="top:calc(60*var(--px));height:calc(600*var(--px))"></div><div class="ev pending sel" style="--c:var(--rafael);top:calc(200*var(--px));height:calc(20*var(--px))" title="10:20 Henrique A."><span class="st">?</span><b>Henrique A.</b></div><div class="ev" style="--c:var(--rafael);top:calc(240*var(--px));height:calc(20*var(--px))" title="11:00 Diego F."><b>Diego F.</b></div></div><div class="col"><div class="open" style="top:calc(60*var(--px));height:calc(660*var(--px))"></div><div class="ev tall" style="--c:var(--juliana);top:calc(630*var(--px));height:calc(30*var(--px))" title="17:30 Diego F."><span class="row"><b>Diego F.</b></span><span class="row"><span class="t">17:30</span></span></div></div><div class="col"><div class="open" style="top:calc(60*var(--px));height:calc(240*var(--px))"></div><div class="ev" style="--c:var(--rafael);top:calc(60*var(--px));height:calc(20*var(--px))" title="08:00 Ana S."><b>Ana S.</b></div><div class="ev pending" style="--c:var(--rafael);top:calc(120*var(--px));height:calc(20*var(--px))" title="09:00 Ana S. ↻"><span class="st">?</span><b>Ana S. ↻</b></div></div><div class="col"></div><div class="lines"></div></div></section>
+
+      <aside class="card detail">
+        <div class="dhead">
+          <div class="avatar">HA</div>
+          <div><p class="dname">Henrique Alves</p><span class="badge b-pending">● Aguardando você</span></div>
+        </div>
+        <div class="deadline">⏱ Responda até <b>qui 12/11 08:20</b></div>
+        <div class="rows">
+          <div class="r"><span class="ic">📅</span><div>qui, 12 de novembro<div class="sub">10:20 – 10:40 · 20 min</div></div></div>
+          <div class="r"><span class="ic" style="color:var(--rafael)">🩺</span><div>Dr. Rafael Nogueira<div class="sub">Dermatologista</div></div></div>
+          <div class="r"><span class="ic">💳</span><div>Particular<div class="sub">R$ 280,00</div></div></div>
+          <div class="r"><span class="ic">📞</span><div>(11) 99123-0008<div class="contact"><button class="mini">Ligar</button><button class="mini">WhatsApp</button></div></div></div>
+        </div>
+        <div class="triage">
+          <h4>Pré-triagem <span class="urg">Urgência média</span></h4>
+          <p><b>Enxaqueca.</b> Dor de cabeça forte de um lado, com enjoo, três vezes nesta semana.</p>
+          <p class="ai">Resumo gerado por IA a partir da conversa. Não é diagnóstico.</p>
+        </div>
+        <div class="actions">
+          <button class="btn ghost">Recusar</button>
+          <button class="btn primary">Aceitar</button>
+        </div>
+      </aside>
+    </div>
+  </main>
+</div>
+</body>
+</html>

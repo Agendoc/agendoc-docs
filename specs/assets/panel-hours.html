@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root { --bg:#f5f8fc; --surface:#fff; --sunken:#ebf0f6; --line:#dfe5ee; --line-strong:#7d8aa0; --ink:#06214e; --muted:#4a5a73; --subtle:#5d6b82; --navy:#13376b; --blue:#1f69d2; --blue-soft:#e7effc; --teal:#2ec8b0; --teal-ink:#0b7566; --teal-soft:#e2f6f1; --danger:#c0362c; --danger-soft:#fdeceb; --warning:#965200; --warning-soft:#fff3dc; --c:#1f69d2; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink); font-family:"Plus Jakarta Sans",system-ui,sans-serif; }
+  .note { max-width:1320px; margin:16px auto 0; padding:12px 16px; border-radius:12px; background:#fff8e6; color:#6b4500; font-size:13px; line-height:19px; }
+  .shell { display:flex; max-width:1320px; margin:12px auto 40px; border-radius:20px; overflow:hidden; box-shadow:0 12px 32px -4px rgba(6,33,78,.18); }
+  .side { width:200px; flex:none; background:var(--navy); color:#fff; padding:20px 12px; font-size:14px; }
+  .side .brand { font-weight:800; font-size:17px; margin:0 8px 2px; } .side .clinic { color:#c9d6ea; font-size:12px; margin:0 8px 20px; }
+  .side a { display:flex; justify-content:space-between; padding:10px 12px; border-radius:8px; color:#fff; text-decoration:none; } .side a.on { background:#24497f; font-weight:700; }
+  .side .count { background:var(--teal); color:var(--ink); border-radius:99px; padding:0 8px; font-size:12px; font-weight:700; }
+  main { flex:1; min-width:0; padding:24px 24px 0; position:relative; }
+  h1 { margin:0; font-size:24px; font-weight:800; } .lead { margin:2px 0 0; color:var(--muted); font-size:14px; }
+  .chips { display:flex; gap:6px; flex-wrap:wrap; margin:16px 0; }
+  .chip { display:inline-flex; align-items:center; gap:7px; height:34px; padding:0 12px; border-radius:99px; border:1px solid var(--line); background:#fff; font:inherit; font-size:13px; font-weight:600; color:var(--muted); cursor:pointer; }
+  .chip.on { background:var(--ink); color:#fff; border-color:var(--ink); } .chip i { width:9px; height:9px; border-radius:50%; }
+  .chip.off { opacity:.6; }
+  .grid2 { display:grid; grid-template-columns:minmax(0,1fr); gap:16px; align-items:start; }
+  .card { overflow-x:auto; background:#fff; border:1px solid var(--line); border-radius:16px; }
+
+  .weekhead { display:flex; justify-content:space-between; align-items:center; padding:14px 16px; border-bottom:1px solid var(--line); gap:12px; flex-wrap:wrap; }
+  .weekhead h2 { margin:0; font-size:16px; }
+  .weekhead .sum { font-size:13px; color:var(--muted); }
+  .tools { display:flex; gap:6px; }
+  .tool { font:inherit; font-size:12px; font-weight:700; height:32px; padding:0 10px; border-radius:8px; border:1px solid var(--line); background:#fff; color:var(--blue); cursor:pointer; }
+  .tool:hover { background:var(--blue-soft); }
+
+  .table { width:100%; border-collapse:collapse; }
+  .table th { padding:10px 12px; font-size:11px; font-weight:700; color:var(--subtle); text-transform:uppercase; letter-spacing:.05em; text-align:left; border-bottom:1px solid var(--line); background:#fbfcfe; }
+  .table td { padding:10px 12px; border-bottom:1px solid var(--line); vertical-align:middle; }
+  .table tr:last-child td { border-bottom:0; }
+  .dayc { display:flex; align-items:center; gap:12px; width:150px; }
+  .tile { width:42px; height:42px; border-radius:12px; display:grid; place-items:center; font-size:11px; font-weight:800; letter-spacing:.04em; cursor:pointer; position:relative; transition:transform .08s; }
+  .tile:active { transform:scale(.94); }
+  .tile.on { background:var(--c); color:#fff; box-shadow:0 4px 10px color-mix(in srgb, var(--c) 35%, transparent); }
+  .tile.on::after { content:"✓"; position:absolute; right:-5px; top:-5px; width:16px; height:16px; border-radius:50%; background:#fff; color:var(--c); font-size:10px; display:grid; place-items:center; box-shadow:0 1px 3px rgba(6,33,78,.25); }
+  .tile.off { background:#fff; color:var(--subtle); border:1.5px dashed #b9c3d3; }
+  .dayc b { display:block; font-size:14px; } .dayc small { color:var(--subtle); font-size:12px; font-weight:500; }
+  .per { width:150px; }
+  .slot { display:flex; align-items:center; justify-content:space-between; width:140px; height:36px; padding:0 4px 0 12px; border-radius:9px; background:var(--blue-soft); border:1px solid #cfe0f8; font-size:13px; font-weight:700; font-variant-numeric:tabular-nums; cursor:pointer; }
+  .slot:hover { border-color:var(--blue); }
+  .slot button { width:24px; height:24px; border:0; border-radius:6px; background:transparent; color:var(--muted); cursor:pointer; font-size:14px; }
+  .slot button:hover { background:#fff; color:var(--danger); }
+  .slot.bad { background:var(--danger-soft); border-color:#f3c3bf; color:var(--danger); }
+  .slot.edit { padding:0 3px; gap:2px; background:#fff; border:2px solid var(--blue); justify-content:center; }
+  .slot.edit select { height:28px; border:0; background:var(--sunken); border-radius:6px; font:inherit; font-size:12px; font-weight:700; padding:0 2px; color:var(--ink); }
+  .empty { width:140px; height:36px; border-radius:9px; border:1px dashed #c8d1de; display:flex; align-items:center; justify-content:center; color:var(--blue); font-size:12px; font-weight:700; cursor:pointer; background:#fff; }
+  .empty:hover { border-color:var(--blue); background:var(--blue-soft); }
+  .none { color:var(--subtle); font-size:13px; font-style:italic; }
+  .bar { position:relative; height:22px; min-width:180px; border-radius:6px; background:var(--sunken); }
+  .seg { position:absolute; top:3px; bottom:3px; border-radius:4px; background:var(--c); }
+  .seg.bad { background:var(--danger); opacity:.8; }
+  .err { margin-top:6px; color:var(--danger); font-size:12px; font-weight:600; }
+  .scale { display:flex; justify-content:space-between; font-size:10px; color:var(--subtle); font-weight:600; text-transform:none; letter-spacing:0; margin-top:2px; }
+  .aside h3 { margin:0 0 8px; font-size:14px; }
+  .aside { padding:16px; display:grid; grid-template-columns:1fr 1fr 1.2fr; gap:24px; align-items:start; }
+  .kv { display:flex; justify-content:space-between; font-size:13px; padding:8px 0; border-bottom:1px solid var(--line); } .kv:last-child { border:0; }
+  .kv span { color:var(--muted); } .kv b { font-weight:700; }
+  .hint { font-size:12px; color:var(--subtle); line-height:18px; background:var(--sunken); border-radius:10px; padding:10px 12px; }
+
+  .savebar { position:sticky; bottom:0; margin:16px -24px 0; padding:12px 24px; background:#fff; border-top:1px solid var(--line); display:flex; align-items:center; justify-content:space-between; box-shadow:0 -6px 16px rgba(6,33,78,.06); }
+  .savebar .dirty { display:flex; align-items:center; gap:8px; font-size:13px; font-weight:600; color:var(--warning); }
+  .savebar .dirty i { width:8px; height:8px; border-radius:50%; background:#e09a1f; }
+  .btn { height:42px; padding:0 18px; border-radius:12px; font:inherit; font-size:14px; font-weight:700; border:0; cursor:pointer; }
+  .primary { background:var(--blue); color:#fff; } .ghost { background:#fff; border:1px solid var(--line); color:var(--muted); margin-right:8px; }
+</style>
+</head>
+<body>
+<div class="note"><b>Mockup 2 (v3, final) — Horários.</b> Na v3 o resumo e as durações saíram da lateral e foram para baixo da tabela. Agora é uma tabela: cada período tem a sua coluna de largura fixa, então tudo fica alinhado entre os dias; a edição acontece dentro da própria célula, sem empurrar nada. O interruptor virou um “ladrilho” do dia (SEG, TER…): colorido com ✓ quando atende, tracejado quando não. Texto anterior: Cada dia vira uma linha: um interruptor “atende / não atende”, uma barrinha das 7h às 20h que desenha os períodos (dá para ver o almoço como um buraco), e os períodos como etiquetas “08:00–12:00”. Clicar numa etiqueta ou em “+ período” abre dois seletores de hora (de 15 em 15 min, sempre 24 h, sem AM/PM). Atalho “Copiar segunda para os dias úteis”. A barra de salvar fica presa embaixo e avisa quando há alterações não salvas. Ao lado, o resumo da semana e as durações por especialidade do médico.</div>
+<div class="shell">
+  <nav class="side">
+    <p class="brand">AgenDoc</p><p class="clinic">Clínica Teste (demonstração)</p>
+    <a href="#">Agenda</a><a href="#">Solicitações <span class="count">6</span></a><a href="#">Médicos</a><a class="on" href="#">Horários</a><a href="#">Bloqueios</a><a href="#">Dados da clínica</a><a href="#">Avaliações</a>
+  </nav>
+  <main>
+    <h1>Horários de atendimento</h1>
+    <p class="lead">Quando cada médico atende. Os horários livres para o paciente saem daqui, menos bloqueios e consultas marcadas.</p>
+    <div class="chips">
+      <button class="chip on"><i style="background:#1f69d2"></i>Camila Rocha</button>
+      <button class="chip"><i style="background:#7c4dcc"></i>Rafael Nogueira</button>
+      <button class="chip"><i style="background:#d9662b"></i>Juliana Prado</button>
+      <button class="chip"><i style="background:#0b7566"></i>Teste</button>
+      <button class="chip off"><i style="background:#7d8aa0"></i>Paulo Mendes · inativo</button>
+    </div>
+
+    <div class="grid2">
+      <section class="card">
+        <div class="weekhead">
+          <div><h2>Semana da Dra. Camila Rocha</h2><div class="sum">5 dias · 40 h por semana · horário de São Paulo</div></div>
+          <div class="tools"><button class="tool">Copiar segunda para os dias úteis</button><button class="tool">Limpar semana</button></div>
+        </div>
+        <table class="table"><thead><tr><th>Dia</th><th>1º período</th><th>2º período</th><th></th><th style="width:30%">Visão do dia<div class="scale"><span>7h</span><span>10h</span><span>13h</span><span>16h</span><span>20h</span></div></th></tr></thead><tbody><tr><td><div class="dayc"><span class="tile on">SEG</span><div><b>Segunda</b><small>8 h</small></div></div></td><td class="per"><div class="slot">08:00 – 12:00<button>×</button></div></td><td class="per"><div class="slot">14:00 – 18:00<button>×</button></div></td><td class="per"><div class="empty">+ período</div></td><td><div class="bar"><div class="seg" style="left:7.69%;width:30.77%"></div><div class="seg" style="left:53.85%;width:30.77%"></div></div></td></tr><tr><td><div class="dayc"><span class="tile on">TER</span><div><b>Terça</b><small>8 h</small></div></div></td><td class="per"><div class="slot">08:00 – 12:00<button>×</button></div></td><td class="per"><div class="slot">14:00 – 18:00<button>×</button></div></td><td class="per"><div class="empty">+ período</div></td><td><div class="bar"><div class="seg" style="left:7.69%;width:30.77%"></div><div class="seg" style="left:53.85%;width:30.77%"></div></div></td></tr><tr><td><div class="dayc"><span class="tile on">QUA</span><div><b>Quarta</b><small>8 h</small></div></div></td><td class="per"><div class="slot">08:00 – 12:00<button>×</button></div></td><td class="per"><div class="slot edit"><select><option>14:00</option></select>–<select><option>18:00</option></select></div></td><td class="per"><div class="empty">+ período</div></td><td><div class="bar"><div class="seg" style="left:7.69%;width:30.77%"></div><div class="seg" style="left:53.85%;width:30.77%"></div></div></td></tr><tr><td><div class="dayc"><span class="tile on">QUI</span><div><b>Quinta</b><small>8 h</small></div></div></td><td class="per"><div class="slot">08:00 – 12:00<button>×</button></div></td><td class="per"><div class="slot">14:00 – 18:00<button>×</button></div></td><td class="per"><div class="empty">+ período</div></td><td><div class="bar"><div class="seg" style="left:7.69%;width:30.77%"></div><div class="seg" style="left:53.85%;width:30.77%"></div></div></td></tr><tr><td><div class="dayc"><span class="tile on">SEX</span><div><b>Sexta</b><small>⚠ revisar</small></div></div></td><td class="per"><div class="slot">08:00 – 12:00<button>×</button></div></td><td class="per"><div class="slot bad">11:00 – 18:00<button>×</button></div><div class="err">O 2º período começa antes do 1º terminar.</div></td><td class="per"><div class="empty">+ período</div></td><td><div class="bar"><div class="seg" style="left:7.69%;width:30.77%"></div><div class="seg bad" style="left:30.77%;width:53.85%"></div></div></td></tr><tr><td><div class="dayc"><span class="tile off">SÁB</span><div><b>Sábado</b><small>Não atende</small></div></div></td><td colspan="3"><span class="none">Toque em SÁB para atender neste dia</span></td><td><div class="bar"></div></td></tr><tr><td><div class="dayc"><span class="tile off">DOM</span><div><b>Domingo</b><small>Não atende</small></div></div></td><td colspan="3"><span class="none">Toque em DOM para atender neste dia</span></td><td><div class="bar"></div></td></tr></tbody></table></section>
+
+      <aside class="card aside">
+        <div>
+          <h3>Resumo</h3>
+          <div class="kv"><span>Dias de atendimento</span><b>seg a sex</b></div>
+          <div class="kv"><span>Horas por semana</span><b>40 h</b></div>
+          <div class="kv"><span>Primeiro horário</span><b>08:00</b></div>
+          <div class="kv"><span>Último horário</span><b>18:00</b></div>
+        </div>
+        <div>
+          <h3>Duração das consultas</h3>
+          <div class="kv"><span>Cardiologista</span><b>30 min · R$ 350</b></div>
+          <div class="kv"><span>Clínico Geral</span><b>20 min · R$ 200</b></div>
+        </div>
+        <div class="hint">Mudou a duração ou o preço? Isso fica em <b>Médicos</b>. Folga, férias ou feriado? Use <b>Bloqueios</b>: os horários daqui continuam iguais.</div>
+      </aside>
+    </div>
+
+    <div class="savebar">
+      <span class="dirty"><i></i>Alterações não salvas na Dra. Camila Rocha</span>
+      <span><button class="btn ghost">Descartar</button><button class="btn primary">Salvar horários</button></span>
+    </div>
+  </main>
+</div>
+</body>
+</html>
