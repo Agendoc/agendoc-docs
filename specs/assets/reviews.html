@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Avaliações · mockup</title>
+<style>
+  body { margin:0; padding:24px 16px; background:#fff; font-family: system-ui, sans-serif; color:#06214e; }
+  h2 { margin:0 0 4px; font-size:18px; }
+  .subtitle { margin:0 0 20px; color:#4a5a73; font-size:13px; }
+  .label { font-weight:700; font-size:13px; margin:0 0 8px; }
+  .phones { display:flex; gap:20px; flex-wrap:wrap; justify-content:center; align-items:flex-start; }
+  .phone { width:280px; height:600px; border:2px solid #dfe5ee; border-radius:28px; background:#f5f8fc; overflow:hidden; color:#06214e; font-size:12px; display:flex; flex-direction:column; }
+  .tb { background:#fff; padding:10px 14px; border-bottom:1px solid #dfe5ee; font-weight:700; font-size:14px; }
+  .demo { background:#fff3dc; color:#965200; font-size:10px; text-align:center; padding:3px; }
+  .body { padding:10px 14px; display:flex; flex-direction:column; gap:8px; flex:1; overflow:hidden; }
+  .card { background:#fff; border:1px solid #dfe5ee; border-radius:14px; padding:10px; }
+  .muted { color:#5d6b82; font-size:11px; }
+  .row { display:flex; justify-content:space-between; align-items:center; gap:6px; }
+  .badge { font-size:10px; font-weight:700; border-radius:999px; padding:2px 7px; }
+  .b-ok { background:#e2f6f1; color:#0b7566; }
+  .b-done { background:#ebf0f6; color:#4a5a73; }
+  .seg { display:flex; background:#ebf0f6; border-radius:10px; padding:3px; }
+  .seg span { flex:1; text-align:center; padding:4px; border-radius:8px; font-size:11px; }
+  .seg .on { background:#fff; font-weight:600; }
+  .nav { display:flex; border-top:1px solid #dfe5ee; background:#fff; }
+  .nav span { flex:1; text-align:center; padding:8px 0; font-size:10px; color:#5d6b82; }
+  .nav .on { color:#1f69d2; font-weight:700; }
+  .btn { background:#1f69d2; color:#fff; text-align:center; border-radius:999px; padding:9px; font-weight:700; }
+  .stars { color:#e8a317; font-size:16px; letter-spacing:2px; }
+  .stars-big { color:#e8a317; font-size:30px; letter-spacing:6px; text-align:center; }
+  .stars-big .off, .stars .off { color:#c3ccda; }
+  .area { border:1px solid #c3ccda; border-radius:12px; background:#fff; padding:8px; min-height:58px; color:#5d6b82; font-size:11px; }
+  .ok { background:#e2f6f1; color:#0b7566; border-radius:12px; padding:10px; text-align:center; font-weight:700; }
+  .avg { display:flex; align-items:center; gap:12px; }
+  .avg b { font-size:34px; line-height:1; }
+  .link { color:#1f69d2; font-weight:600; }
+  .note { max-width:280px; font-size:12px; color:#4a5a73; margin-top:6px; }
+</style>
+</head>
+<body>
+
+<h2>Avaliações do paciente</h2>
+<p class="subtitle">Comente no chat o que está errado ou faltando.</p>
+
+<div class="phones">
+
+  <div>
+    <p class="label">1 · Minhas consultas › Anteriores</p>
+    <div class="phone">
+      <div class="demo">Dados de demonstração</div>
+      <div class="tb">Minhas consultas</div>
+      <div class="body">
+        <div class="seg"><span>Próximas</span><span class="on">Anteriores</span></div>
+        <div class="card">
+          <div class="row"><b>Qui, 5/11 · 14:00</b><span class="badge b-done">Realizada</span></div>
+          <div class="muted">Clínico Geral · Clínica Teste</div>
+          <div class="row" style="margin-top:6px"><span class="muted">Como foi?</span><span class="stars"><span class="off">★★★★★</span></span></div>
+        </div>
+        <div class="card">
+          <div class="row"><b>Seg, 12/10 · 16:00</b><span class="badge b-done">Realizada</span></div>
+          <div class="muted">Dermatologia · DermaVida</div>
+          <div class="muted" style="margin-top:6px; color:#0b7566">✓ Avaliação enviada</div>
+        </div>
+      </div>
+      <div class="nav"><span>💬<br>Conversas</span><span class="on">📅<br>Consultas</span><span>👤<br>Perfil</span></div>
+    </div>
+    <p class="note">As estrelas só aparecem em consulta realizada e ainda sem avaliação. Tocar numa estrela abre o detalhe da consulta com aquela nota já marcada.</p>
+  </div>
+
+  <div>
+    <p class="label">2 · Detalhe › avaliar</p>
+    <div class="phone">
+      <div class="demo">Dados de demonstração</div>
+      <div class="tb">‹ Consulta</div>
+      <div class="body">
+        <div class="card">
+          <div class="row"><b>Clínico Geral</b><span class="badge b-done">Realizada</span></div>
+          <div>Quinta, 5 de novembro · 14:00</div>
+          <div class="muted">Clínica Teste · Av. Paulista, 1000</div>
+        </div>
+        <div class="card" style="display:flex; flex-direction:column; gap:8px">
+          <b>Como foi a consulta?</b>
+          <div class="stars-big">★★★★<span class="off">★</span></div>
+          <div class="muted" style="text-align:center">Boa</div>
+          <div class="area">Conte como foi o atendimento. Não inclua dados de saúde nem nomes.</div>
+          <div class="row"><span class="muted">Opcional</span><span class="muted">0/500</span></div>
+          <div class="btn">Enviar avaliação</div>
+          <div class="muted" style="text-align:center">Sua avaliação é anônima: aparece como "Paciente verificado".</div>
+        </div>
+      </div>
+    </div>
+    <p class="note">Rótulos das notas: 1 Ruim · 2 Regular · 3 Ok · 4 Boa · 5 Excelente. O botão só habilita depois de escolher a nota. Não dá para editar depois de enviar.</p>
+  </div>
+
+  <div>
+    <p class="label">3 · Depois de enviar</p>
+    <div class="phone">
+      <div class="demo">Dados de demonstração</div>
+      <div class="tb">‹ Consulta</div>
+      <div class="body">
+        <div class="card">
+          <div class="row"><b>Clínico Geral</b><span class="badge b-done">Realizada</span></div>
+          <div>Quinta, 5 de novembro · 14:00</div>
+          <div class="muted">Clínica Teste · Av. Paulista, 1000</div>
+        </div>
+        <div class="ok">✓ Obrigado pela avaliação</div>
+        <div class="muted" style="text-align:center">Ela já conta na nota da clínica.</div>
+      </div>
+    </div>
+    <p class="note">Ao voltar depois, a consulta mostra só "✓ Avaliação enviada", como no cartão da tela 1.</p>
+  </div>
+
+  <div>
+    <p class="label">4 · Clínica › Avaliações</p>
+    <div class="phone">
+      <div class="demo">Dados de demonstração</div>
+      <div class="tb">‹ Avaliações · Clínica Teste</div>
+      <div class="body">
+        <div class="card avg">
+          <b>4,6</b>
+          <div>
+            <div class="stars">★★★★<span class="off">★</span></div>
+            <div class="muted">11 avaliações</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="stars">★★★★★</div>
+          <div style="margin:4px 0">Atendimento pontual e a recepção foi muito atenciosa.</div>
+          <div class="muted">Paciente verificado · novembro de 2026</div>
+        </div>
+        <div class="card">
+          <div class="stars">★★★★<span class="off">★</span></div>
+          <div class="muted">Paciente verificado · novembro de 2026</div>
+        </div>
+        <div class="card">
+          <div class="stars">★★★<span class="off">★★</span></div>
+          <div style="margin:4px 0">Esperei 30 minutos além do horário.</div>
+          <div class="muted">Paciente verificado · outubro de 2026</div>
+        </div>
+      </div>
+    </div>
+    <p class="note">Entrada pela tela da clínica: "★ 4,6 (11) · Avaliações ›". Mostra as 20 mais recentes, sem nome do paciente nem do médico. Sem avaliações: "Esta clínica ainda não tem avaliações."</p>
+  </div>
+
+</div>
+</body>
+</html>
