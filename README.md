@@ -7,6 +7,7 @@ Fonte compartilhada das decisões de produto do AgenDoc, para a equipe e para ag
 | Pasta | O quê |
 |---|---|
 | [`roadmap.md`](roadmap.md) | O que está em andamento, o que vem depois e ideias, com status |
+| [`backlog-parte-1.md`](backlog-parte-1.md) | Itens menores adiados na Parte 1 |
 | [`specs/`](specs/) | Designs que envolvem mais de um serviço (rascunhos de tela em `specs/assets/`) |
 | [`decisions/`](decisions/) | Um arquivo curto por decisão: data, contexto, decisão, motivo |
 | [`research/`](research/) | Pesquisas e estudos (validação, integrações) |
