@@ -125,6 +125,17 @@ Mesmo fluxo da parte 1: branches por tarefa → `feat/email` em cada repositóri
 | M2 | E-mail da consulta com a triagem, avisos de remarcação e da clínica, lembretes com escolha de horários, lembrete de exemplo |
 | M3 | Configuração de produção (Gmail), roadmap e documentação, revisão final e deploy |
 
+## Decisões durante a implementação
+
+- **15/11/2026 [autor]:** a recuperação de senha ficou em **3 telas** na mesma rota `/esqueci-senha` (e-mail → código → nova senha), com o indicador de etapas do design system. O código é conferido antes da tela da nova senha por um endpoint novo, `POST /api/auth/password/check`, que não gasta o código mas conta as tentativas. O e-mail e o código nunca vão para a URL; recarregar a página volta para a primeira tela.
+- **Redefinição sem revelar contas:** qualquer falha na redefinição (código errado, vencido, sem código ativo, e-mail sem conta, clínica, admin, conta de teste sem "E-mail de envio") responde `INVALID_CODE`. A redefinição nunca responde `CODE_EXPIRED`: quem tem um código vencido vê "Código incorreto." e pede outro. A confirmação de e-mail continua com `CODE_EXPIRED`.
+- **15/11/2026 [autor]:** layout dos e-mails aprovado a partir de um rascunho: logo no topo, caixa destacada para o código, cores do design system. O logo vai embutido em cada e-mail (imagem inline), e não por link, para aparecer no Mailpit e no Gmail mesmo com o site fora do ar.
+- **15/11/2026 [autor]:** botão de mostrar e esconder a senha ("olhinho") nos campos de senha (login, cadastro e nova senha).
+- **Lembretes atrasados:** um lembrete cujo horário passou há mais de 10 minutos (por exemplo, depois de a API ficar fora do ar) é pulado, nunca enviado atrasado. A tarefa roda uma vez por vez, o que garante o envio no máximo uma vez, a não ser que a API caia entre enviar e registrar.
+- **Sem coordenadas, sem rota:** se a clínica não tem coordenadas, o lembrete vai sem o link de rota.
+- **Cancelamento pela clínica com remarcação pendente:** quando a clínica cancela só a solicitação de remarcação, o e-mail diz que o novo horário foi cancelado e que a consulta original continua de pé, com o botão "Ver consulta" para a original. Quando a clínica cancela a consulta original e a solicitação juntas, só chega um e-mail, o da original.
+- O registro completo das decisões de implementação, com o custo de cada uma se estiver errada, ficou no ledger do plano (`.superpowers/`, fora do git), removido depois desta parte; as que mudam o produto entram aqui.
+
 ## Deixado para o builder
 
 Os contratos exatos da API, os nomes das tabelas, o mecanismo do bloqueio (autoridade da sessão, filtro...), o motor de templates dos e-mails, o texto final de cada e-mail e o visual dentro do design system.
