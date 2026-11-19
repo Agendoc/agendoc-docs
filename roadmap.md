@@ -31,4 +31,4 @@ Mesmo fluxo da parte 1: os marcos aprovados entraram na `develop` de `agendoc-ap
 | M1 | Envio (SMTP + Mailpit), confirmação de e-mail com bloqueio, recuperação de senha em 3 telas, contas de teste com "E-mail de envio", layout dos e-mails com logo | feito e aprovado (15/11/2026), na `develop` |
 | M2 | E-mail da consulta com a triagem, avisos de remarcação e da clínica, lembretes com escolha de horários, lembrete de exemplo, botão de mostrar a senha | feito e aprovado (15/11/2026), na `develop` |
 | Deploy | Gmail configurado na VM, `develop` → `main` (agendoc-api#4, agendoc-web#5) | no ar desde 15/11/2026 |
-| M3 | Revisão final dos dois repositórios (corrigido o aviso de reenvio na tela de confirmar e-mail; o resto foi para o [backlog](backlog-parte-2.md)), roadmap e documentação | feito (15/11/2026); a correção está na `develop`, ainda não em produção |
+| M3 | Revisão final dos dois repositórios (corrigido o aviso de reenvio na tela de confirmar e-mail; o resto foi para o [backlog](backlog-parte-2.md)), roadmap e documentação | feito (15/11/2026); a correção foi ao ar em 19/11/2026 (agendoc-web#6, junto com o Next.js 16.4.6) |
