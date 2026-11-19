@@ -533,7 +533,7 @@ Coisas que não têm tela, mas fazem parte do que foi entregue:
 - **Dados de demonstração:** 12 clínicas fictícias em São Paulo (Paulista, Pinheiros e Vila Mariana), cobrindo as 15 especialidades, mais 4 pronto atendimentos 24 h e avaliações iniciais. CRMs no formato `DEMO-0000` para não parecerem reais.
 - **Contas de teste de paciente:** o seed cria `paciente1..3@demo.agendoc.dev` (já confirmadas) quando `DEMO_PATIENT_PASSWORD` está definida, mesmo num banco que já tem clínicas.
 - **Expiração automática:** um job muda para "Expirou" os pedidos não respondidos até 2 h antes da consulta e avisa o paciente por e-mail.
-- **Lembretes:** uma tarefa roda a cada minuto e envia os lembretes cujo horário chegou. Cada lembrete guarda o canal (por enquanto só e-mail), para o WhatsApp entrar depois sem refazer o modelo.
+- **Lembretes:** uma tarefa roda a cada minuto e envia os lembretes cujo horário chegou. Cada lembrete guarda o canal (hoje só e-mail).
 - **Envio de e-mail:** SMTP configurado por variáveis de ambiente. Em produção, Gmail (`agendoc.app@gmail.com`, porta 587, senha de app só no `.env` da VM); localmente, o Mailpit do `compose.yaml`.
 - **Stack:** API em Java 21 + Spring Boot 4 + MySQL ([`agendoc-api`](https://github.com/Agendoc/agendoc-api)) e web em Next.js 16 + React 19 ([`agendoc-web`](https://github.com/Agendoc/agendoc-web)). O contrato completo da API está no README da API e no Swagger.
 - **Deploy:** merge na `main` dispara o CI, que publica na VM sozinho. Detalhes em [`agendoc-api/docs/deploy.md`](https://github.com/Agendoc/agendoc-api/blob/main/docs/deploy.md).

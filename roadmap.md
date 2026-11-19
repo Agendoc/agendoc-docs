@@ -6,8 +6,6 @@ Status: `em andamento` · `próximo` · `ideia` · `feito`
 |---|---|---|
 | Parte 1: Clínicas e agendamento (busca, marcar, minhas consultas, painel da clínica, avaliações, emergência, .ics) | feito | [spec](specs/2026-11-01-clinics-scheduling-design.md) · [plano](plans/2026-11-01-clinics-scheduling.md) · [progresso](#progresso-da-parte-1) · [backlog](backlog-parte-1.md) |
 | Parte 2: E-mail: confirmação de e-mail, recuperação de senha, resumo da triagem, lembretes | feito | [spec](specs/2026-11-09-email-design.md) · [plano](plans/2026-11-09-email.md) · [progresso](#progresso-da-parte-2) · [backlog](backlog-parte-2.md) |
-| Parte 3: WhatsApp: resumo da triagem e lembretes pela API oficial da Meta (só contas de teste) | em andamento | [estudo](research/2026-11-16-whatsapp-integracao.md) · [spec](specs/2026-11-16-whatsapp-design.md) · [plano](plans/2026-11-16-whatsapp.md) |
-| WhatsApp de ida e volta (webhooks da Meta): status de entrega no app, botões "Confirmo presença" / "Preciso remarcar" no lembrete, "PARAR" | ideia | [estudo](research/2026-11-16-whatsapp-integracao.md) |
 | Chat entre clínica e paciente dentro do app | ideia | — |
 | Chatbot de ajuda na tela de busca de clínicas | ideia | — |
 | Vários usuários por clínica / login por médico | ideia | — |
